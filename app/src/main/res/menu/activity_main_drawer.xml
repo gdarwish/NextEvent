@@ -6,15 +6,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/eventsFragment"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_event_note_black_24dp"
             android:title="@string/menu_events" />
         <item
             android:id="@+id/calendarFragment"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_event_available_black_24dp"
             android:title="@string/menu_calendar" />
         <item
             android:id="@+id/savedFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_save_black_24dp"
             android:title="@string/menu_saved" />
     </group>
 
@@ -22,8 +22,8 @@
         <menu >
             <item
                 android:id="@+id/settingFragment"
-                android:icon="@drawable/ic_menu_share"
                 android:checkable="true"
+                android:icon="@drawable/ic_settings_black_24dp"
                 android:title="@string/menu_settings" />
         </menu>
     </item>
