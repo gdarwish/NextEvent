@@ -7,6 +7,14 @@
     tools:context=".Fragments.EventsFragment">
 
 
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/searchHint"
+        android:inputType="textPersonName" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventRecyclerView"
         android:layout_width="match_parent"
