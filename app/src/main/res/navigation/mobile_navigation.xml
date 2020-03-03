@@ -8,7 +8,11 @@
         android:id="@+id/eventsFragment"
         android:name="com.nextevent.Fragments.EventsFragment"
         android:label="Events"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/eventToDetail"
+            app:destination="@id/detailEventFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.nextevent.Fragments.CalendarFragment"
@@ -24,4 +28,14 @@
         android:name="com.nextevent.Fragments.SettingFragment"
         android:label="Setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/detailEvent"
+        android:name="com.nextevent.ViewPager.DetailEvent"
+        android:label="detail_event"
+        tools:layout="@layout/detail_event" />
+    <fragment
+        android:id="@+id/detailEventFragment2"
+        android:name="com.nextevent.ViewPager.DetailEventFragment"
+        android:label="Detail Event"
+        tools:layout="@layout/fragment_detail_event" />
 </navigation>
