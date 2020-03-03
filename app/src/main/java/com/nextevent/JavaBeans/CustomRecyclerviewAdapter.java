@@ -1,6 +1,7 @@
 package com.nextevent.JavaBeans;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecyclerviewAdapter.CustomViewHolder> {
@@ -38,8 +40,8 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.title.setText(eventModel.getTitle());
         holder.description.setText(eventModel.getDescription());
         Picasso.get().load(eventModel.getImageUrl()).placeholder(R.drawable.placeholder).into(holder.image);
-//        Picasso.with(context).load(eventModel.getImageUrl()).placeholder(R.drawable.ic_event_available_black_24dp).into(holder.image);
-//         Picasso.with(this).load("www.journaldev.com").placeholder(R.drawable.placeholder).into(imageView);
+
+
     }
 
     @Override
@@ -47,7 +49,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         return events.size();
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected ImageView image;
         protected TextView title;
@@ -58,6 +60,14 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.title = itemView.findViewById(R.id.title);
             this.description = itemView.findViewById(R.id.description);
             this.image = itemView.findViewById(R.id.image);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Bundle arg = new Bundle();
+            Navigation.findNavController(view).navigate(R.id.eventToDetail);
         }
     }
 }
