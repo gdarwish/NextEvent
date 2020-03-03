@@ -20,6 +20,8 @@ import com.nextevent.R;
 
 import java.util.ArrayList;
 
+import static com.nextevent.MainActivity.fab;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +45,7 @@ public class EventsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events, container, false);
 
+        fab.hide();
         searBar = view.findViewById(R.id.searchBar);
         recyclerView = view.findViewById(R.id.eventRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
