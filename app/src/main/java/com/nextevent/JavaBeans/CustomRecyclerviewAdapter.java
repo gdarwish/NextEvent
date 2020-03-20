@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.nextevent.R;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -39,7 +38,8 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
     public void onBindViewHolder(@NonNull CustomRecyclerviewAdapter.CustomViewHolder holder, int position) {
         Event event = events.get(position);
         holder.title.setText(event.getTitle());
-        holder.description.setText(event.getDescription());
+        holder.date.setText(event.getStart());
+        holder.location.setText(event.getCountry());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
     }
 
@@ -58,13 +58,15 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
         protected ImageView image;
         protected TextView title;
-        protected TextView description;
+        protected TextView date;
+        protected TextView location;
 
          public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             this.title = itemView.findViewById(R.id.title);
-            this.description = itemView.findViewById(R.id.description);
+            this.date = itemView.findViewById(R.id.date);
             this.image = itemView.findViewById(R.id.image);
+            this.location = itemView.findViewById(R.id.location);
 
             itemView.setOnClickListener(this);
         }

@@ -18,9 +18,10 @@ public class Event implements Parcelable {
     private String country;
     private String image;
 
-    public Event(String title, String description, String image) {
+    public Event(String title, String start, String country, String image) {
         this.title = title;
-        this.description = description;
+        this.start = start;
+        this.country = country;
         this.image = image;
     }
 

@@ -35,7 +35,7 @@ import static com.nextevent.MainActivity.fab;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventsFragment extends Fragment  implements APIResponse {
+public class EventsFragment extends Fragment implements APIResponse {
 
     RecyclerView recyclerView;
     CustomRecyclerviewAdapter adapter;
@@ -59,25 +59,22 @@ public class EventsFragment extends Fragment  implements APIResponse {
         recyclerView = view.findViewById(R.id.eventRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        HashMap<String, String> headers = new HashMap<>();
-        // API KEY
-        headers.put("Authorization", "Bearer l5V8mMsVhA99CwkPxc7T2E9IU_SCxzJPxQDdqQua");
-        String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
+//        HashMap<String, String> headers = new HashMap<>();
+//        // API KEY
+//        headers.put("");
+//        // API URL
+//        String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
+//
+//        MainAPI.getInstance(getContext())
+//                .setHeaders(headers)
+//                .stringRequest(MainAPI.Method.GET, url, null, this);
 
-        MainAPI.getInstance(getContext())
-                .setHeaders(headers)
-                .stringRequest(MainAPI.Method.GET, url, null, this);
-
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-
+        events.add(new Event("Ghaith", "09/09/2020", "CA",  "https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png"));
+        events.add(new Event("Ghaith", "09/09/2020", "CA",  "https://imgbin.com/i/fav/android-chrome-512x512.png"));
+        events.add(new Event("Ghaith", "09/09/2020", "CA",  "https://icons.iconarchive.com/icons/martz90/circle/512/video-camera-icon.png"));
+        events.add(new Event("Ghaith", "09/09/2020", "CA",  "https://icons.iconarchive.com/icons/dtafalonso/android-l/512/WhatsApp-icon.png"));
+        events.add(new Event("Ghaith", "09/09/2020", "CA",  "https://www.lavalnews.ca/wp-content/uploads/2016/03/cropped-n-logo-black-outline-512-x-512.png"));
         // creating new instance of CustomRecyclerviewAdapter
-
         adapter = new CustomRecyclerviewAdapter(events, getActivity());
         // Setting the adapter for the recyclerview
         recyclerView.setAdapter(adapter);
@@ -111,8 +108,8 @@ public class EventsFragment extends Fragment  implements APIResponse {
 
         events.clear();
 
-        for (Event event:
-             eventResult.getResults()) {
+        for (Event event :
+                eventResult.getResults()) {
             events.add(event);
         }
         adapter.updateList(events);
