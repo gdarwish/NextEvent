@@ -48,67 +48,67 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // CREATE
-    public void addEvent(Event event) {
-        //Get the Writable Database
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        //Create the Content Values
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, event.getName());
-        values.put(COLUMN_DESCRIPTION, event.getDescription());
-        values.put(COLUMN_IMAGE, event.getImage());
-        values.put(COLUMN_DATE, event.getDate());
-        values.put(COLUMN_IS_SAVED, event.isSaved());
-        values.put(COLUMN_IS_REGISTERED, event.isRegistered());
-
-        //Insert the Data & close the Database
-        db.insert(TABLE_EVENTS, null, values);
-        db.close();
-    }
+//    public void addEvent(Event event) {
+//        //Get the Writable Database
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        //Create the Content Values
+//        ContentValues values = new ContentValues();
+//        values.put(COLUMN_NAME, event.getTitle());
+//        values.put(COLUMN_DESCRIPTION, event.getDescription());
+//        values.put(COLUMN_IMAGE, event.getImage());
+//        values.put(COLUMN_DATE, event.getDate());
+//        values.put(COLUMN_IS_SAVED, event.isSaved());
+//        values.put(COLUMN_IS_REGISTERED, event.isRegistered());
+//
+//        //Insert the Data & close the Database
+//        db.insert(TABLE_EVENTS, null, values);
+//        db.close();
+//    }
 
 
     // RETRIEVE
-    public Event getEvent(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Event event = null;
-        Cursor cursor = db.query(TABLE_EVENTS, new String[]{
-                COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_IMAGE, COLUMN_DATE, COLUMN_IS_SAVED, COLUMN_IS_REGISTERED
-        }, COLUMN_ID + "= ?", new String[]{String.valueOf(id)}, null, null, null);
+//    public Event getEvent(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Event event = null;
+//        Cursor cursor = db.query(TABLE_EVENTS, new String[]{
+//                COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_IMAGE, COLUMN_DATE, COLUMN_IS_SAVED, COLUMN_IS_REGISTERED
+//        }, COLUMN_ID + "= ?", new String[]{String.valueOf(id)}, null, null, null);
+//
+//        if(cursor.moveToFirst()) {
+//            event = new Event(
+//                    cursor.getInt(0),
+//                    cursor.getString(1),
+//                    cursor.getString(2),
+//                    cursor.getString(3),
+//                    cursor.getString(4),
+//                    cursor.getInt(5),
+//                    cursor.getInt(6)
+//            );
+//        }
+//
+//        db.close();
+//        return event;
+//    }
 
-        if(cursor.moveToFirst()) {
-            event = new Event(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6)
-            );
-        }
-
-        db.close();
-        return event;
-    }
-
-    public ArrayList<Event> getAllEvents(){
-        SQLiteDatabase db  = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS ,
-                null);
-        ArrayList<Event> equipment = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            equipment.add(new Event(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getInt(5),
-                    cursor.getInt(6)));
-        }
-        db.close();
-        return equipment;
-    }
+//    public ArrayList<Event> getAllEvents(){
+//        SQLiteDatabase db  = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS ,
+//                null);
+//        ArrayList<Event> equipment = new ArrayList<>();
+//        while(cursor.moveToNext()) {
+//            equipment.add(new Event(
+//                    cursor.getInt(0),
+//                    cursor.getString(1),
+//                    cursor.getString(2),
+//                    cursor.getString(3),
+//                    cursor.getString(4),
+//                    cursor.getInt(5),
+//                    cursor.getInt(6)));
+//        }
+//        db.close();
+//        return equipment;
+//    }
 
 
     // UPDATE
@@ -116,9 +116,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     // DELETE
-    public void deleteEvent(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EVENTS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
-    }
+//    public void deleteEvent(int id) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.delete(TABLE_EVENTS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+//        db.close();
+//    }
 }

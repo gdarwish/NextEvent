@@ -6,19 +6,28 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import ca.alidali.mainapi.APIResponse;
+import ca.alidali.mainapi.MainAPI;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.google.gson.Gson;
 import com.nextevent.JavaBeans.CustomRecyclerviewAdapter;
+import com.nextevent.JavaBeans.Event;
 import com.nextevent.JavaBeans.EventModel;
+import com.nextevent.JavaBeans.EventResult;
 import com.nextevent.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import static com.nextevent.MainActivity.fab;
 
@@ -26,11 +35,11 @@ import static com.nextevent.MainActivity.fab;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventsFragment extends Fragment {
+public class EventsFragment extends Fragment  implements APIResponse {
 
     RecyclerView recyclerView;
     CustomRecyclerviewAdapter adapter;
-    ArrayList<EventModel> events = new ArrayList<>();
+    ArrayList<Event> events = new ArrayList<>();
     EditText searBar;
 
 
@@ -50,16 +59,24 @@ public class EventsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.eventRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        events.add(new EventModel("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://lh3.googleusercontent.com/proxy/Oz9rjqVE1WcapCGRU4ei4xZbRTf0Ca7TeZTW8mLuv4wLV_6BILgDhkcCB23ChxU5x597MLFKrCSSLNcDiFIW_12gJEUREVOG08L2bMngmrNAnNvzx7BvGkE"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://fintechbelgium.be/wp-content/uploads/2018/06/https___image.flaticon.com_icons_png_512_314_314550-480x480.png"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://i.dlpng.com/static/png/4614747_thumb.png"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://sustainablecortland00.files.wordpress.com/2013/07/event-icon.png"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://www.iconninja.com/files/618/341/273/chart-event-calendar-schedule-business-plan-month-icon.svg"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://www.transparentpng.com/thumb/calendar/red-calendar-events-icon-png-9.png"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://images.squarespace-cdn.com/content/v1/5c0887728ab7228323e0d320/1572381330660-GVXS072JMAGOCZZOHW9P/ke17ZwdGBToddI8pDm48kLxnK526YWAH1qleWz-y7AFZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVFUQAah1E2d0qOFNma4CJuw0VgyloEfPuSsyFRoaaKT76QvevUbj177dmcMs1F0H-0/BrandAlive-Icon-Inhouse2.png"));
-        events.add(new EventModel("Ghaith", "Ghaith", "https://i.dlpng.com/static/png/4614724_thumb.png"));
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("");
+        String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
+
+        MainAPI.getInstance(getContext())
+                .setHeaders(headers)
+                .stringRequest(MainAPI.Method.GET, url, null, this);
+
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+//        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
+
         // creating new instance of CustomRecyclerviewAdapter
+
         adapter = new CustomRecyclerviewAdapter(events, getActivity());
         // Setting the adapter for the recyclerview
         recyclerView.setAdapter(adapter);
@@ -84,4 +101,24 @@ public class EventsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onSuccess(Object result, int status) {
+//        Log.e("RESULT", "String\n" + result.toString());
+        Gson gson = new Gson();
+        EventResult eventResult = gson.fromJson(result.toString(), EventResult.class);
+//        Log.e("RESULT", "JSON\n" + eventResult.toString());
+
+        events.clear();
+
+        for (Event event:
+             eventResult.getResults()) {
+            events.add(event);
+        }
+        adapter.updateList(events);
+    }
+
+    @Override
+    public void onFailure(Object result, int status) {
+
+    }
 }
