@@ -33,4 +33,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.github.alidali96:Android4All:v0.3'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 }
