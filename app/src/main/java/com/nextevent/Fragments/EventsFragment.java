@@ -61,7 +61,7 @@ public class EventsFragment extends Fragment  implements APIResponse {
 
         HashMap<String, String> headers = new HashMap<>();
         // API KEY
-        headers.put("");
+        headers.put("Authorization", "Bearer l5V8mMsVhA99CwkPxc7T2E9IU_SCxzJPxQDdqQua");
         String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
 
         MainAPI.getInstance(getContext())
