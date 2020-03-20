@@ -60,6 +60,7 @@ public class EventsFragment extends Fragment  implements APIResponse {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         HashMap<String, String> headers = new HashMap<>();
+        // API KEY
         headers.put("");
         String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
 
