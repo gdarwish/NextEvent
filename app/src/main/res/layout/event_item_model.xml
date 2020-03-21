@@ -37,14 +37,19 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="7dp"
+        android:layout_marginEnd="8dp"
         android:elevation="2dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
         android:text="Title"
         android:textColor="@android:color/background_dark"
         android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toEndOf="@+id/image"
         app:layout_constraintTop_toTopOf="@id/cardView" />
 
@@ -105,5 +110,25 @@
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/cardView"
         app:srcCompat="@drawable/ic_info_outline_black_24dp" />
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/labels"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:alignContent="stretch"
+        android:elevation="2dp"
+        app:alignItems="stretch"
+        app:flexWrap="wrap"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@+id/loca">
+
+    </com.google.android.flexbox.FlexboxLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

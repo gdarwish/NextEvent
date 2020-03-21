@@ -18,6 +18,9 @@ public class Event implements Parcelable {
     private String country;
     private String image;
 
+    private double lang;
+    private double lat;
+
     public Event(String title, String start, String country, String image) {
         this.title = title;
         this.start = start;
@@ -38,6 +41,16 @@ public class Event implements Parcelable {
         this.location = location;
         this.country = country;
         this.image = image;
+    }
+
+    public double getLang() {
+        if (location.length >= 2)
+            return location[0];
+        return 0;
+    }
+
+    public double getLat() {
+        return location[1];
     }
 
     public String getId() {
@@ -129,6 +142,17 @@ public class Event implements Parcelable {
     }
 
     public String getImage() {
+        switch (category) {
+            case "Art":
+                image = "https://fucku.kalb/";
+                break;
+            case "Kalb":
+                image = "https://gdarwish.scweb.ca/my_photo.jpg";
+                break;
+
+            default:
+                image = "default image";
+        }
         return image;
     }
 

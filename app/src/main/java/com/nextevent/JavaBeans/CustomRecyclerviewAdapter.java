@@ -2,17 +2,20 @@ package com.nextevent.JavaBeans;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.nextevent.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +44,19 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.date.setText(event.getStart());
         holder.location.setText(event.getCountry());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
+        for (String label:
+            event.getLabels()
+        ) {
+            TextView textView = new TextView(context);
+            textView.setText(label);
+            textView.setPadding(5,0,5,5);
+            textView.setBackgroundResource(R.drawable.border);
+            FlexboxLayout.LayoutParams params = new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,0,10,0);
+            textView.setLayoutParams(params);
+            holder.labels.addView(textView);
+
+        }
     }
 
     @Override
@@ -56,6 +72,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        protected FlexboxLayout labels;
         protected ImageView image;
         protected TextView title;
         protected TextView date;
@@ -67,6 +84,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.date = itemView.findViewById(R.id.date);
             this.image = itemView.findViewById(R.id.image);
             this.location = itemView.findViewById(R.id.location);
+            this.labels = itemView.findViewById(R.id.labels);
 
             itemView.setOnClickListener(this);
         }
