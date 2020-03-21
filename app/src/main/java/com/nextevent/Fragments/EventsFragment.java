@@ -63,7 +63,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 //        // API KEY
 //        headers.put("");
 //        // API URL
-//        String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
+//        String url = "https://api.predicthq.com/v1/events?within=10km@42.2951067,-83.072922";
 //
 //        MainAPI.getInstance(getContext())
 //                .setHeaders(headers)
