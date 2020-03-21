@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nextevent.JavaBeans.Event;
@@ -31,6 +32,7 @@ public class DetailEventFragment extends Fragment {
     ImageButton directionButton;
     ImageButton shareButton;
     Button addEventButton;
+    LinearLayout labels;
 
     public DetailEventFragment() {
         // Required empty public constructor
@@ -50,7 +52,7 @@ public class DetailEventFragment extends Fragment {
         directionButton = view.findViewById(R.id.directionsButton);
         shareButton = view.findViewById(R.id.shareButton);
         addEventButton = view.findViewById(R.id.addButton);
-
+        labels = view.findViewById(R.id.labels);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,12 +89,24 @@ public class DetailEventFragment extends Fragment {
             }
         });
 
+
         if (getArguments() != null) {
             event = getArguments().getParcelable("event");
             title.setText(event.getTitle());
             date.setText(event.getStart());
             location.setText(event.getCountry());
             description.setText(event.getDescription());
+
+            for (String label : event.getLabels()) {
+                TextView textView = new TextView(getContext());
+                textView.setText(label);
+                textView.setPadding(5, 0, 5, 5);
+                textView.setBackgroundResource(R.drawable.border);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 0, 10, 0);
+                textView.setLayoutParams(params);
+                labels.addView(textView);
+            }
         }
         return view;
     }

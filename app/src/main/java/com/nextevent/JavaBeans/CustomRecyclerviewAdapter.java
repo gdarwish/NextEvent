@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -44,18 +45,16 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.date.setText(event.getStart());
         holder.location.setText(event.getCountry());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
-        for (String label:
-            event.getLabels()
-        ) {
+
+        for (String label : event.getLabels()) {
             TextView textView = new TextView(context);
             textView.setText(label);
-            textView.setPadding(5,0,5,5);
+            textView.setPadding(5, 0, 5, 5);
             textView.setBackgroundResource(R.drawable.border);
-            FlexboxLayout.LayoutParams params = new FlexboxLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0,0,10,0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 10, 0);
             textView.setLayoutParams(params);
             holder.labels.addView(textView);
-
         }
     }
 
@@ -72,13 +71,13 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        protected FlexboxLayout labels;
+        protected LinearLayout labels;
         protected ImageView image;
         protected TextView title;
         protected TextView date;
         protected TextView location;
 
-         public CustomViewHolder(@NonNull View itemView) {
+        public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             this.title = itemView.findViewById(R.id.title);
             this.date = itemView.findViewById(R.id.date);
