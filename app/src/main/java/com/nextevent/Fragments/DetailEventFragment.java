@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -26,6 +28,7 @@ public class DetailEventFragment extends Fragment {
     TextView location;
     TextView title;
     TextView description;
+    ImageView eventImage;
 
     ImageButton saveButton;
     ImageButton webButton;
@@ -53,6 +56,7 @@ public class DetailEventFragment extends Fragment {
         shareButton = view.findViewById(R.id.shareButton);
         addEventButton = view.findViewById(R.id.addButton);
         labels = view.findViewById(R.id.labels);
+        eventImage = view.findViewById(R.id.eventImage);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +100,7 @@ public class DetailEventFragment extends Fragment {
             date.setText(event.getStart());
             location.setText(event.getCountry());
             description.setText(event.getDescription());
+            Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(eventImage);
 
             for (String label : event.getLabels()) {
                 TextView textView = new TextView(getContext());

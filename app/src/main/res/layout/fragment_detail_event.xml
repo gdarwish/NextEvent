@@ -75,7 +75,7 @@
                 app:layout_constraintTop_toTopOf="@+id/directionsButton" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/eventImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:src="@drawable/placeholder"
@@ -114,7 +114,7 @@
                 android:textColor="#000000"
                 android:textSize="19sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/eventImage" />
 
             <TextView
                 android:id="@+id/save"
