@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -46,6 +47,20 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.location.setText(event.getCountry());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
 
+        if (event.getRank() > 0 && event.getRank() < 20){
+            holder.ratingBar.setRating(1);
+        }else if (event.getRank() > 20 && event.getRank() < 40){
+            holder.ratingBar.setRating(2);
+        }else if (event.getRank() > 40 && event.getRank() < 60){
+            holder.ratingBar.setRating(3);
+        }else if (event.getRank() > 60 && event.getRank() < 80){
+            holder.ratingBar.setRating(4);
+        }else if (event.getRank() > 80 && event.getRank() < 100){
+            holder.ratingBar.setRating(5);
+        }else {
+            holder.ratingBar.setRating(0);
+        }
+
         for (String label : event.getLabels()) {
             TextView textView = new TextView(context);
             textView.setText(label);
@@ -76,6 +91,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         protected TextView title;
         protected TextView date;
         protected TextView location;
+        protected RatingBar ratingBar;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +100,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.image = itemView.findViewById(R.id.image);
             this.location = itemView.findViewById(R.id.location);
             this.labels = itemView.findViewById(R.id.labels);
+            this.ratingBar = itemView.findViewById(R.id.ratingBar);
 
             itemView.setOnClickListener(this);
         }

@@ -17,4 +17,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="customRatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+<!--        <item name="android:minHeight">20dp</item>-->
+<!--        <item name="android:maxHeight">100dp</item>-->
+<!--        <item name="android:minWidth">50dp</item>-->
+<!--        <item name="android:maxWidth">50dp</item>-->
+<!--        <item name="colorControlNormal">@color/primary_light</item>-->
+<!--        <item name="colorControlActivated">@color/primary_dark</item>-->
+    </style>
+
 </resources>
