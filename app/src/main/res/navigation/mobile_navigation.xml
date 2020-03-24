@@ -35,7 +35,7 @@
         tools:layout="@layout/detail_event" />
     <fragment
         android:id="@+id/detailEventFragment2"
-        android:name="com.nextevent.ViewPager.DetailEventFragment"
+        android:name="com.nextevent.Fragments.DetailEventFragment"
         android:label="Detail Event"
         tools:layout="@layout/fragment_detail_event" />
 </navigation>
