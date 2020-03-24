@@ -61,12 +61,12 @@ public class EventsFragment extends Fragment  implements APIResponse {
 
         HashMap<String, String> headers = new HashMap<>();
         // API KEY
-        headers.put("");
+        //headers.put("");
         String url = "https://api.predicthq.com/v1/events?within=1km@42.2951067,-83.072922";
 
-        MainAPI.getInstance(getContext())
-                .setHeaders(headers)
-                .stringRequest(MainAPI.Method.GET, url, null, this);
+//        MainAPI.getInstance(getContext())
+//                .setHeaders(headers)
+//                .stringRequest(MainAPI.Method.GET, url, null, this);
 
 //        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
 //        events.add(new Event("Ghaith", "Ghaith", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQUVJQyaDhAU2TrCTE86fMkrchtrGkGd8zmO_mFMWcZ83fGs7Oh"));
