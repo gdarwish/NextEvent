@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.alidali.mainapi.APIResponse;
 import ca.alidali.mainapi.MainAPI;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.nextevent.API.EventSingleton;
 import com.nextevent.JavaBeans.CustomRecyclerviewAdapter;
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.JavaBeans.EventResult;
@@ -71,6 +74,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 //        events.add(new Event("Ghaith", "09/09/2020", "CA", "https://icons.iconarchive.com/icons/dtafalonso/android-l/512/WhatsApp-icon.png"));
 //        events.add(new Event("Ghaith", "09/09/2020", "CA", "https://www.lavalnews.ca/wp-content/uploads/2016/03/cropped-n-logo-black-outline-512-x-512.png"));
         // creating new instance of CustomRecyclerviewAdapter
+
         adapter = new CustomRecyclerviewAdapter(events, getActivity());
         // Setting the adapter for the recyclerview
         recyclerView.setAdapter(adapter);
@@ -89,9 +93,9 @@ public class EventsFragment extends Fragment implements APIResponse {
 
     private void search(String search) {
         search += "&country=CA";
-        MainAPI.getInstance(getContext())
+        EventSingleton.getInstance(getContext())
                 .setHeaders(headers)
-                .jsonObjectRequest(MainAPI.Method.GET, search, null, this);
+                .jsonObjectRequest(Request.Method.GET, search, null, this);
     }
 
     @Override
@@ -104,8 +108,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 
         events.clear();
 
-        for (Event event :
-                eventResult.getResults()) {
+        for (Event event : eventResult.getResults()) {
             events.add(event);
         }
         adapter.updateList(events);
