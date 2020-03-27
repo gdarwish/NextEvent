@@ -50,7 +50,10 @@ public class Event implements Parcelable {
     }
 
     public double getLat() {
-        return location[1];
+        if (location.length >= 2){
+            return location[1];
+        }
+        return 0;
     }
 
     public String getId() {

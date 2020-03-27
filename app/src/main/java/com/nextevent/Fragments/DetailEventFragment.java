@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,6 @@ public class DetailEventFragment extends Fragment {
                 Uri url = Uri.parse("https://www.google.com/search?q=" + title.getText());
                 Intent i = new Intent(Intent.ACTION_VIEW, url);
                 if (i.resolveActivity(getContext().getPackageManager()) != null) {
-
                     getContext().startActivity(i);
                 }
             }
@@ -84,6 +84,11 @@ public class DetailEventFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // get direction to the event location by google maps
+                Uri locationUri = Uri.parse("geo:0,0?q="+event.getLat()+","+event.getLang());
+                Intent intent = new Intent(Intent.ACTION_VIEW, locationUri);
+                if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
 
