@@ -96,6 +96,13 @@ public class DetailEventFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // share info about the event by a text
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                String body = "On:" + event.getStart() + "\n" + event.getDescription();
+                String subject = "Hey! you need to check this out: " + event.getTitle();
+                i.putExtra(Intent.EXTRA_SUBJECT, subject);
+                i.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(Intent.createChooser(i, "Share Using"));
             }
         });
 
