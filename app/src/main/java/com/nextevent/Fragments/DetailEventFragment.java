@@ -1,5 +1,7 @@
 package com.nextevent.Fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -69,6 +71,12 @@ public class DetailEventFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // open a web page about the event with more  info
+                Uri url = Uri.parse("https://www.google.com/search?q=" + title.getText());
+                Intent i = new Intent(Intent.ACTION_VIEW, url);
+                if (i.resolveActivity(getContext().getPackageManager()) != null) {
+
+                    getContext().startActivity(i);
+                }
             }
         });
 
