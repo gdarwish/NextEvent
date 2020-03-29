@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class DetailEventFragment extends Fragment {
     TextView description;
     ImageView eventImage;
 
-    ImageButton saveButton;
+    ImageButton addButton;
     ImageButton webButton;
     ImageButton directionButton;
     ImageButton shareButton;
@@ -53,7 +52,7 @@ public class DetailEventFragment extends Fragment {
         date = view.findViewById(R.id.dateText);
         location = view.findViewById(R.id.locationText);
         description = view.findViewById(R.id.descriptionText);
-        saveButton = view.findViewById(R.id.saveButton);
+        addButton = view.findViewById(R.id.saveButton);
         webButton = view.findViewById(R.id.webButton);
         directionButton = view.findViewById(R.id.directionsButton);
         shareButton = view.findViewById(R.id.shareButton);
@@ -61,10 +60,16 @@ public class DetailEventFragment extends Fragment {
         labels = view.findViewById(R.id.labels);
         eventImage = view.findViewById(R.id.eventImage);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // add the event to database as saved event
+
+                if (getArguments() != null) {
+                    event = getArguments().getParcelable("event");
+                    SavedFragment.addedEvent.add(event);
+
+                }
             }
         });
 
