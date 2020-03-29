@@ -18,9 +18,13 @@ public class Event implements Parcelable {
     private String country;
     private String image;
 
-    public Event(String title, String description, String image) {
+    private double lang;
+    private double lat;
+
+    public Event(String title, String start, String country, String image) {
         this.title = title;
-        this.description = description;
+        this.start = start;
+        this.country = country;
         this.image = image;
     }
 
@@ -37,6 +41,19 @@ public class Event implements Parcelable {
         this.location = location;
         this.country = country;
         this.image = image;
+    }
+
+    public double getLang() {
+        if (location.length >= 2)
+            return location[0];
+        return 0;
+    }
+
+    public double getLat() {
+        if (location.length >= 2){
+            return location[1];
+        }
+        return 0;
     }
 
     public String getId() {
@@ -128,11 +145,59 @@ public class Event implements Parcelable {
     }
 
     public String getImage() {
+        switch (category) {
+            case "school-holidays":
+                image = "https://gdarwish.scweb.ca/NextEventImages/school-holiday.png";
+                break;
+            case "public-holidays":
+                image = "https://gdarwish.scweb.ca/NextEventImages/public-holiday.png";
+                break;
+            case "observances":
+                image = "https://gdarwish.scweb.ca/NextEventImages/observances.png";
+                break;
+            case "politics":
+                image = "https://gdarwish.scweb.ca/NextEventImages/politics.png";
+                break;
+            case "conferences":
+                image = "https://gdarwish.scweb.ca/NextEventImages/conferences.png";
+                break;
+            case "expos":
+                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                break;
+            case "festivals":
+                image = "https://gdarwish.scweb.ca/NextEventImages/festivals.png";
+                break;
+            case "performing-arts":
+                image = "https://gdarwish.scweb.ca/NextEventImages/performing.png";
+                break;
+            case "community":
+                image = "https://gdarwish.scweb.ca/NextEventImages/community.png";
+                break;
+            case "sports":
+                image = "https://gdarwish.scweb.ca/NextEventImages/sports.png";
+                break;
+            case "daylight-savings":
+                image = "https://gdarwish.scweb.ca/NextEventImages/daylight.png";
+                break;
+            case "airport-delays":
+                image = "https://gdarwish.scweb.ca/NextEventImages/airport.png";
+                break;
+            case "severe-weather":
+                image = "https://gdarwish.scweb.ca/NextEventImages/severe.jpg";
+                break;
+            case "disasters":
+                image = "https://gdarwish.scweb.ca/NextEventImages/disasters.png";
+                break;
+            case "terror":
+                image = "https://gdarwish.scweb.ca/NextEventImages/terror.png";
+                break;
+            case "concerts":
+                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                break;
+            default:
+                image = "default image";
+        }
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
 
