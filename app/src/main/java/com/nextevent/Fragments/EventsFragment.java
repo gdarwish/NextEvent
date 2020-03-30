@@ -62,9 +62,8 @@ public class EventsFragment extends Fragment implements APIResponse {
         recyclerView = view.findViewById(R.id.eventRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         // API KEY
-        headers.put("Authorization", getString(R.string.api_key));
+        //headers.put("Authorization", getString(R.string.api_key));
         // API URL
 
 
