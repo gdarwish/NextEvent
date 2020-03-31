@@ -1,4 +1,4 @@
-app/src/main/res/values/api.xml
+app/src/main/res/values-v21/api.xml
 *.iml 
 .gradle
 /local.properties

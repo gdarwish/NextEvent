@@ -5,6 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+/**
+ * @author Ghaith Darwish
+ * @last modified: 30/03/2020
+ */
 public class EventResult implements Parcelable {
     int count;
     boolean overflow;
