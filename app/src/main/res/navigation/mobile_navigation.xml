@@ -3,41 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
+    app:startDestination="@id/eventsFragment">
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.nextevent.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/eventsFragment"
+        android:name="com.nextevent.Fragments.EventsFragment"
+        android:label="Events"
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/eventToDetail"
+            app:destination="@id/detailEventFragment2" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.nextevent.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/calendarFragment"
+        android:name="com.nextevent.Fragments.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.nextevent.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
+        android:id="@+id/savedFragment"
+        android:name="com.nextevent.Fragments.SavedFragment"
+        android:label="Saved Events"
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/savedEventToDetails"
+            app:destination="@id/detailEventFragment2" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.nextevent.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
+        android:id="@+id/settingFragment"
+        android:name="com.nextevent.Fragments.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_setting" />
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.nextevent.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
+        android:id="@+id/detailEvent"
+        android:name="com.nextevent.ViewPager.DetailEvent"
+        android:label="detail_event"
+        tools:layout="@layout/detail_event" />
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.nextevent.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/detailEventFragment2"
+        android:name="com.nextevent.Fragments.DetailEventFragment"
+        android:label="Detail Event"
+        tools:layout="@layout/fragment_detail_event" />
 </navigation>

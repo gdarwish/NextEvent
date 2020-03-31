@@ -1,4 +1,5 @@
-*.iml
+app/src/main/res/values-v21/api.xml
+*.iml 
 .gradle
 /local.properties
 /.idea/caches
