@@ -17,7 +17,6 @@
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -38,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:elevation="2dp"
         android:ellipsize="end"
@@ -47,9 +46,21 @@
         android:text="Title"
         android:textColor="@android:color/background_dark"
         android:textSize="19sp"
-        app:layout_constraintEnd_toEndOf="@id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
         app:layout_constraintTop_toTopOf="@id/cardView" />
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete_black_24dp" />
 
     <TextView
         android:id="@+id/date"
@@ -98,17 +109,6 @@
         app:layout_constraintTop_toBottomOf="@+id/time"
         app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="@+id/cardView"
-        app:srcCompat="@drawable/ic_info_outline_black_24dp" />
-
     <RatingBar
         android:id="@+id/ratingBar"
         style="@style/customRatingBar"
@@ -133,7 +133,7 @@
         android:elevation="2dp"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/location">
 

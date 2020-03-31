@@ -1,23 +1,24 @@
 package com.nextevent.JavaBeans;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.android.flexbox.FlexboxLayout;
+import com.nextevent.DatabaseHandler;
 import com.nextevent.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,11 +28,13 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
     private ArrayList<Event> events;
     private Context context;
     private int id;
+    private DatabaseHandler db;
 
     public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context, int id) {
         this.events = events;
         this.context = context;
         this.id = id;
+        db = new DatabaseHandler(context);
     }
 
     @NonNull
@@ -49,17 +52,17 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.location.setText(event.getCountry());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
 
-        if (event.getRank() > 0 && event.getRank() < 20){
+        if (event.getRank() > 0 && event.getRank() < 20) {
             holder.ratingBar.setRating(1);
-        }else if (event.getRank() > 20 && event.getRank() < 40){
+        } else if (event.getRank() > 20 && event.getRank() < 40) {
             holder.ratingBar.setRating(2);
-        }else if (event.getRank() > 40 && event.getRank() < 60){
+        } else if (event.getRank() > 40 && event.getRank() < 60) {
             holder.ratingBar.setRating(3);
-        }else if (event.getRank() > 60 && event.getRank() < 80){
+        } else if (event.getRank() > 60 && event.getRank() < 80) {
             holder.ratingBar.setRating(4);
-        }else if (event.getRank() > 80 && event.getRank() < 100){
+        } else if (event.getRank() > 80 && event.getRank() < 100) {
             holder.ratingBar.setRating(5);
-        }else {
+        } else {
             holder.ratingBar.setRating(0);
         }
 
@@ -94,8 +97,9 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         protected TextView date;
         protected TextView location;
         protected RatingBar ratingBar;
+        protected ImageButton deleteButton;
 
-        public CustomViewHolder(@NonNull View itemView, int id) {
+        public CustomViewHolder(@NonNull View itemView, final int id) {
             super(itemView);
             this.title = itemView.findViewById(R.id.title);
             this.date = itemView.findViewById(R.id.date);
@@ -103,8 +107,30 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.location = itemView.findViewById(R.id.location);
             this.labels = itemView.findViewById(R.id.labels);
             this.ratingBar = itemView.findViewById(R.id.ratingBar);
-
+            this.deleteButton = itemView.findViewById(R.id.deleteButton);
             itemView.setOnClickListener(this);
+
+
+            //description.setVisibility(View.GONE);
+            // delete events
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    new AlertDialog.Builder(context).setTitle("Delete").setMessage("Are you sure you want to delete " + events.get(
+                            getLayoutPosition()).getTitle() + "?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    db.deleteEvent(events.get(getLayoutPosition()).getId());
+                                    // will find another way
+                                    Navigation.findNavController(view).navigate(R.id.savedFragment);
+                                }
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                }
+            });
         }
 
         @Override
