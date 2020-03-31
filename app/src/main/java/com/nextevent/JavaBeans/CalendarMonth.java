@@ -3,12 +3,14 @@ package com.nextevent.JavaBeans;
 import org.threeten.bp.YearMonth;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class CalendarMonth {
     private YearMonth month;
-    private ArrayList<Event> events;
+    private HashMap<Event, Date> events;
 
-    public CalendarMonth(YearMonth month, ArrayList<Event> events) {
+    public CalendarMonth(YearMonth month, HashMap<Event, Date> events) {
         this.month = month;
         this.events = events;
     }
@@ -17,7 +19,7 @@ public class CalendarMonth {
         return month;
     }
 
-    public ArrayList<Event> getEvents() {
+    public HashMap<Event, Date> getEvents() {
         return events;
     }
 }
