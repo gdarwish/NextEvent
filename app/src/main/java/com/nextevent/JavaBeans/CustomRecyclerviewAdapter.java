@@ -23,18 +23,24 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @author Ghaith Darwish
+ * @Last modified: 30/03/2020
+ */
 public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecyclerviewAdapter.CustomViewHolder> {
 
     private ArrayList<Event> events;
     private Context context;
     private int id;
     private DatabaseHandler db;
+    private boolean showDelete;
 
-    public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context, int id) {
+    public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context, int id, boolean showDelete) {
         this.events = events;
         this.context = context;
         this.id = id;
         db = new DatabaseHandler(context);
+        this.showDelete = showDelete;
     }
 
     @NonNull
@@ -50,22 +56,11 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.title.setText(event.getTitle());
         holder.date.setText(event.getStart());
         holder.location.setText(event.getCountry());
+        // Loading images with Picasso
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);
-
-        if (event.getRank() > 0 && event.getRank() < 20) {
-            holder.ratingBar.setRating(1);
-        } else if (event.getRank() > 20 && event.getRank() < 40) {
-            holder.ratingBar.setRating(2);
-        } else if (event.getRank() > 40 && event.getRank() < 60) {
-            holder.ratingBar.setRating(3);
-        } else if (event.getRank() > 60 && event.getRank() < 80) {
-            holder.ratingBar.setRating(4);
-        } else if (event.getRank() > 80 && event.getRank() < 100) {
-            holder.ratingBar.setRating(5);
-        } else {
-            holder.ratingBar.setRating(0);
-        }
-
+        // Getting rank and setting it to rattingBar
+        ratingBarRank(event.getRank(), holder.ratingBar);
+        // Getting the labels and setting them in a horizontal scrollview
         for (String label : event.getLabels()) {
             TextView textView = new TextView(context);
             textView.setText(label);
@@ -78,19 +73,43 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         }
     }
 
+    /**
+     * Setting the ratingBer stars according to the rank
+     * @param rank
+     * @param ratingBar
+     */
+    public void ratingBarRank(int rank, RatingBar ratingBar) {
+        if (rank > 0 && rank < 20) {
+            ratingBar.setRating(1);
+        } else if (rank > 20 && rank < 40) {
+            ratingBar.setRating(2);
+        } else if (rank > 40 && rank < 60) {
+            ratingBar.setRating(3);
+        } else if (rank > 60 && rank < 80) {
+            ratingBar.setRating(4);
+        } else if (rank > 80 && rank < 100) {
+            ratingBar.setRating(5);
+        } else {
+            ratingBar.setRating(0);
+        }
+    }
+
     @Override
     public int getItemCount() {
         return events.size();
     }
 
-
+    /**
+     * Updating the events list
+     *
+     * @param events
+     */
     public void updateList(ArrayList<Event> events) {
         this.events = events;
         notifyDataSetChanged();
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         protected LinearLayout labels;
         protected ImageView image;
         protected TextView title;
@@ -110,21 +129,28 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.deleteButton = itemView.findViewById(R.id.deleteButton);
             itemView.setOnClickListener(this);
 
+            if (showDelete){
+                deleteButton.setVisibility(View.VISIBLE);
+            }else {
+                deleteButton.setVisibility(View.GONE);
+            }
 
-            //description.setVisibility(View.GONE);
+
             // delete events
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    new AlertDialog.Builder(context).setTitle("Delete").setMessage("Are you sure you want to delete " + events.get(
-                            getLayoutPosition()).getTitle() + "?")
+                    // Creating AlertDialog when deleting an event
+                    new AlertDialog.Builder(context).setTitle("Delete")
+                            .setMessage("Are you sure you want to delete " + events.get(getLayoutPosition()).getTitle() + "?")
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    db.deleteEvent(events.get(getLayoutPosition()).getId());
-                                    // will find another way
-                                    Navigation.findNavController(view).navigate(R.id.savedFragment);
+                                    Event event = events.get(getAdapterPosition());
+                                    db.deleteEvent(event.getId());
+                                    events.remove(event);
+                                    notifyItemRemoved(getAdapterPosition());
                                 }
                             })
                             .setNegativeButton("No", null)
@@ -135,9 +161,9 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
         @Override
         public void onClick(View view) {
+            // Create a bundle to send the event object with it
             Bundle arg = new Bundle();
             arg.putParcelable("event", events.get(getAdapterPosition()));
-            //savedEvent
             Navigation.findNavController(view).navigate(id, arg);
         }
     }

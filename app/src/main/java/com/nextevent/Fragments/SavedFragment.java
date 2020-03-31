@@ -43,7 +43,7 @@ public class SavedFragment extends Fragment {
         // get all events from the database and store in events ArrayList
         events = db.getAllEvents();
         // create CustomRecyclerviewAdapter object and give it the events lists, and savedEventToDetails id
-        adapter = new CustomRecyclerviewAdapter(events, getContext(), R.id.savedEventToDetails);
+        adapter = new CustomRecyclerviewAdapter(events, getContext(), R.id.savedEventToDetails, true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // set the recyclerview adapter
         recyclerView.setAdapter(adapter);
