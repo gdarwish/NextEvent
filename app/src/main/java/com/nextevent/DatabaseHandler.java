@@ -252,7 +252,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_LATITUDE, event.getLat());
         values.put(COLUMN_COUNTRY, event.getCountry());
         values.put(COLUMN_IMAGE, event.getImage());
-        return db.update(TABLE_EVENTS, values, COLUMN_ID + " =?", new String[]{String.valueOf(event.getId())});
+        return db.update(TABLE_EVENTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(event.getId())});
     }
 
 
@@ -264,6 +264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteEvent(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EVENTS, COLUMN_ID + " = ?", new String[]{id});
+        db.delete(TABLE_LABELS, COLUMN_EVENT_ID + " = ?", new String[]{id});
         db.close();
     }
 }
