@@ -11,13 +11,14 @@ import androidx.annotation.Nullable;
 import com.nextevent.JavaBeans.Event;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Handles Database queries for the app.
  *
  * @author Abel Anderson
- * @version 1.2
- * @since 28/03/2020
+ * @version 1.2.1
+ * @since 30/03/2020
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -218,7 +219,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private String[] getEventLabels(String eventId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LABELS +
-                " WHERE " + COLUMN_EVENT_ID + " = " + eventId, null);
+                " WHERE " + COLUMN_EVENT_ID + " = \"" + eventId + "\"", null);
 
         ArrayList<String> labels = new ArrayList<>();
 
@@ -226,7 +227,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             labels.add(cursor.getString(2));
         }
 
-        return (String[]) labels.toArray();
+        return Arrays.copyOf(labels.toArray(), labels.size(), String[].class);
     }
 
     // UPDATE
