@@ -75,7 +75,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 //        events.add(new Event("Ghaith", "09/09/2020", "CA", "https://www.lavalnews.ca/wp-content/uploads/2016/03/cropped-n-logo-black-outline-512-x-512.png"));
         // creating new instance of CustomRecyclerviewAdapter
 
-        adapter = new CustomRecyclerviewAdapter(events, getActivity());
+        adapter = new CustomRecyclerviewAdapter(events, getActivity(), R.id.eventToDetail);
         // Setting the adapter for the recyclerview
         recyclerView.setAdapter(adapter);
 

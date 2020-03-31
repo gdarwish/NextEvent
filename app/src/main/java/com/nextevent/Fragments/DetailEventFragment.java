@@ -14,7 +14,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.nextevent.DatabaseHandler;
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
 import com.squareup.picasso.Picasso;
@@ -60,6 +62,8 @@ public class DetailEventFragment extends Fragment {
         labels = view.findViewById(R.id.labels);
         eventImage = view.findViewById(R.id.eventImage);
 
+        final DatabaseHandler db = new DatabaseHandler(getContext());
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +71,8 @@ public class DetailEventFragment extends Fragment {
 
                 if (getArguments() != null) {
                     event = getArguments().getParcelable("event");
-                    SavedFragment.addedEvent.add(event);
+                    db.addEvent(event);
+                    Toast.makeText(getContext(),"Added successful",Toast.LENGTH_SHORT).show();
 
                 }
             }

@@ -26,17 +26,19 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     private ArrayList<Event> events;
     private Context context;
+    private int id;
 
-    public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context) {
+    public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context, int id) {
         this.events = events;
         this.context = context;
+        this.id = id;
     }
 
     @NonNull
     @Override
     public CustomRecyclerviewAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item_model, parent, false);
-        return new CustomViewHolder(view);
+        return new CustomViewHolder(view, id);
     }
 
     @Override
@@ -93,7 +95,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         protected TextView location;
         protected RatingBar ratingBar;
 
-        public CustomViewHolder(@NonNull View itemView) {
+        public CustomViewHolder(@NonNull View itemView, int id) {
             super(itemView);
             this.title = itemView.findViewById(R.id.title);
             this.date = itemView.findViewById(R.id.date);
@@ -109,7 +111,8 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
         public void onClick(View view) {
             Bundle arg = new Bundle();
             arg.putParcelable("event", events.get(getAdapterPosition()));
-            Navigation.findNavController(view).navigate(R.id.eventToDetail, arg);
+            //savedEvent
+            Navigation.findNavController(view).navigate(id, arg);
         }
     }
 }
