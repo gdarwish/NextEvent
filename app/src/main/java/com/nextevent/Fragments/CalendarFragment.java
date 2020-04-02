@@ -23,6 +23,7 @@ import org.threeten.bp.YearMonth;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -52,7 +53,7 @@ public class CalendarFragment extends Fragment {
 
         //Populate the Adapter ArrayList
         for (int i = -12; i < 12; i++) {
-            HashMap<Event, LocalDate> currentEvents = filterEvents(events, currentMonth.plusMonths(i));
+            HashMap<LocalDate, ArrayList<Event>> currentEvents = filterEvents(events, currentMonth.plusMonths(i));
             calendarMonths.add(new CalendarMonth(currentMonth.plusMonths(i), currentEvents));
         }
 
@@ -71,18 +72,29 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
-    private HashMap<Event, LocalDate> filterEvents(ArrayList<Event> events, YearMonth filterDate) {
+    private HashMap<LocalDate, ArrayList<Event>> filterEvents(ArrayList<Event> events, YearMonth filterDate) {
 
-        HashMap<Event, LocalDate> filterdArrayList = new HashMap<>();
+        //Create the HashMap
+        HashMap<LocalDate, ArrayList<Event>> filterdArrayList = new HashMap<>();
 
         //Create the Date Formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
         //Loop through the events and grab the events from the current month
         for (Event event : events) {
+
+            //Parse the LocalDate from the event
             LocalDate eventDate = LocalDate.parse(event.getParsableStartDate(), formatter);
+
+            //Check if the event matches the Month & Year passed in
             if (eventDate.getMonth().getValue() == filterDate.getMonth().getValue() && eventDate.getYear() == filterDate.getYear()) {
-                filterdArrayList.put(event, eventDate);
+
+                //Create a new reference to this date inside the HashMap if it does not already exist
+                if(filterdArrayList.containsKey(eventDate)) {
+                    filterdArrayList.get(eventDate).add(event);
+                } else {
+                    filterdArrayList.put(eventDate, new ArrayList<>(Collections.singletonList(event)));
+                }
             }
         }
 

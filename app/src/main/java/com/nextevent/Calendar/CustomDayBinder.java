@@ -9,8 +9,8 @@ import com.nextevent.R;
 
 import org.threeten.bp.LocalDate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Binds a day to a DayViewContainer. This class is responsible for setting the date and events on the DayViewContainer for that day.
@@ -22,9 +22,9 @@ import java.util.Map;
 
 public class CustomDayBinder implements DayBinder<DayViewContainer> {
 
-    private HashMap<Event, LocalDate> events;
+    private HashMap<LocalDate, ArrayList<Event>> events;
 
-    CustomDayBinder(HashMap<Event, LocalDate> events) {
+    CustomDayBinder(HashMap<LocalDate, ArrayList<Event>> events) {
         this.events = events;
     }
 
@@ -37,8 +37,8 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
     public void bind(DayViewContainer dayViewContainer, CalendarDay day) {
         dayViewContainer.dayText.setText(day.getDay() + "");
 
-        for (Map.Entry<Event, LocalDate> event : events.entrySet()) {
-            if (event.getValue().getDayOfMonth() == day.getDay()) {
+        if(events.containsKey(day.getDate())) {
+            for (Event event : events.get(day.getDate())) {
                 dayViewContainer.eventDisplay.addView(View.inflate(dayViewContainer.getView().getContext(), R.layout.calendar_event_circle, null));
             }
         }
