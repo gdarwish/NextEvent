@@ -79,7 +79,10 @@ public class Event implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        if (!description.isEmpty()){
+            return description;
+        }
+        return "No description...";
     }
 
     public void setDescription(String description) {
