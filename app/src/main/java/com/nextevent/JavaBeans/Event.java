@@ -3,6 +3,12 @@ package com.nextevent.JavaBeans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
+/**
+ * @author Ghaith Darwish
+ * @Last Modified: 30/03/2020
+ */
 public class Event implements Parcelable {
 
     private String id;
@@ -50,7 +56,7 @@ public class Event implements Parcelable {
     }
 
     public double getLat() {
-        if (location.length >= 2){
+        if (location.length >= 2) {
             return location[1];
         }
         return 0;
@@ -144,6 +150,7 @@ public class Event implements Parcelable {
         this.country = country;
     }
 
+    // get the image URL by event category
     public String getImage() {
         switch (category) {
             case "school-holidays":
@@ -248,4 +255,12 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof Event) {
+            return id.equals(((Event) obj).getId());
+        }
+        return super.equals(obj);
+    }
 }

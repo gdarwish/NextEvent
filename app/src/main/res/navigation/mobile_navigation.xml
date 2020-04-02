@@ -22,7 +22,11 @@
         android:id="@+id/savedFragment"
         android:name="com.nextevent.Fragments.SavedFragment"
         android:label="Saved Events"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/savedEventToDetails"
+            app:destination="@id/detailEventFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.nextevent.Fragments.SettingFragment"
