@@ -17,7 +17,7 @@ import java.util.Arrays;
  * Handles Database queries for the app.
  *
  * @author Abel Anderson
- * @version 1.2.1
+ * @version 1.2.2
  * @since 30/03/2020
  */
 
@@ -203,8 +203,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     cursor.getString(6),
                     cursor.getString(7),
                     new double[]{cursor.getDouble(8), cursor.getDouble(9)},
-                    cursor.getString(8),
-                    cursor.getString(9)
+                    cursor.getString(10),
+                    cursor.getString(11)
             ));
         }
         db.close();

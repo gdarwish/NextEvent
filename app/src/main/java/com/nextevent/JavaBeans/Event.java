@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Ghaith Darwish
- * @Last Modified: 30/03/2020
+ * @since 01/04/2020
  */
 public class Event implements Parcelable {
 
@@ -62,6 +62,17 @@ public class Event implements Parcelable {
         return 0;
     }
 
+    /**
+     * Creates a parsable date out of the start date.
+     *
+     * @return a parsable date
+     * @author Abel Anderson
+     * @since 01/04/2020
+     */
+    public String getParsableStartDate() {
+        return start.substring(0, 10).replace('-', '/');
+    }
+
     public String getId() {
         return id;
     }
@@ -79,7 +90,10 @@ public class Event implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        if (!description.isEmpty()){
+            return description;
+        }
+        return "No description...";
     }
 
     public void setDescription(String description) {

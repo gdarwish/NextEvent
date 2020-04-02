@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nextevent.DatabaseHandler;
 import com.nextevent.JavaBeans.CustomRecyclerviewAdapter;
@@ -20,13 +21,14 @@ import java.util.ArrayList;
 
 /**
  * @author Ghaith Darwish
- * @last modified: 30/3/2020
+ * @last modified: 01/04/2020
  */
 public class SavedFragment extends Fragment {
 
     RecyclerView recyclerView;
     CustomRecyclerviewAdapter adapter;
     ArrayList<Event> events;
+    TextView savedHint;
 
     public SavedFragment() {
         // Required empty public constructor
@@ -35,6 +37,8 @@ public class SavedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_saved, container, false);
+        savedHint = view.findViewById(R.id.savedHint);
+
         // link recycler view with xml
         recyclerView = view.findViewById(R.id.recyclerView);
         // create data database object
@@ -42,6 +46,13 @@ public class SavedFragment extends Fragment {
 
         // get all events from the database and store in events ArrayList
         events = db.getAllEvents();
+
+        // check if there's any save events
+        if (events.size() > 0){
+            // hide the hint text
+            savedHint.setVisibility(View.GONE);
+        }
+
         // create CustomRecyclerviewAdapter object and give it the events lists, and savedEventToDetails id
         adapter = new CustomRecyclerviewAdapter(events, getContext(), R.id.savedEventToDetails, true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
