@@ -27,7 +27,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Search for events..."
-        android:textColor="@android:color/black"
+        android:text="@string/HintText"
+        android:textColor="@color/hitText"
         android:textSize="24sp" />
 </LinearLayout>
