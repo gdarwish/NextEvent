@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +19,17 @@ import com.nextevent.JavaBeans.CalendarMonth;
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.YearMonth;
+import org.threeten.bp.format.DateTimeFormatter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CalendarFragment extends Fragment {
-
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -43,30 +41,9 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        //Old CalendarView Code - Keeping for reference
-
-//        CalendarView calendarView = view.findViewById(R.id.calendarView);
-//        calendarView.setDayBinder(new CustomDayBinder());
-//
-//        YearMonth currentMonth = YearMonth.now();
-//        YearMonth firstMonth = currentMonth.minusMonths(10);
-//        YearMonth lastMonth = currentMonth.plusMonths(10);
-//        DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
-//
-//        calendarView.setup(firstMonth, lastMonth, firstDayOfWeek);
-//        calendarView.setHasBoundaries(true);
-//        calendarView.setScrollMode(ScrollMode.PAGED);
-//        calendarView.setOrientation(RecyclerView.HORIZONTAL);
-//        calendarView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-//        calendarView.setMaxRowCount(6);
-//        calendarView.scrollToMonth(currentMonth);
-
-
         //Get all events from the Database
         DatabaseHandler db = new DatabaseHandler(getContext());
         ArrayList<Event> events = db.getAllEvents();
-
-        // Date Format of Api - 2020-04-10T00:00:00Z
 
         //Create new ArrayList for Adapter
         ArrayList<CalendarMonth> calendarMonths = new ArrayList<>();
@@ -76,7 +53,7 @@ public class CalendarFragment extends Fragment {
 
         //Populate the Adapter ArrayList
         for (int i = -12; i < 12; i++) {
-            HashMap<Event, Date> currentEvents = filterEvents(events, currentMonth.plusMonths(i));
+            HashMap<Event, LocalDate> currentEvents = filterEvents(events, currentMonth.plusMonths(i));
             calendarMonths.add(new CalendarMonth(currentMonth.plusMonths(i), currentEvents));
         }
 
@@ -95,27 +72,20 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
-    private HashMap<Event, Date> filterEvents(ArrayList<Event> events, YearMonth filterDate) {
+    private HashMap<Event, LocalDate> filterEvents(ArrayList<Event> events, YearMonth filterDate) {
 
-        HashMap<Event, Date> filterdArrayList = new HashMap<>();
+        HashMap<Event, LocalDate> filterdArrayList = new HashMap<>();
 
-        //Create the DateFormatter
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        //Create the Date Formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
         //Loop through the events and grab the events from the current month
         for (Event event : events) {
-            try {
-                Date eventDate = formatter.parse(event.getStart());
-                if (eventDate.getMonth() == filterDate.getMonth().getValue() && eventDate.getYear() == filterDate.getYear()) {
-                    filterdArrayList.put(event, eventDate);
-                }
-            } catch (ParseException ignored) {
+            LocalDate eventDate = LocalDate.parse(event.getParsableStartDate(), formatter);
+            if (eventDate.getMonth().getValue() == filterDate.getMonth().getValue() && eventDate.getYear() == filterDate.getYear()) {
+                filterdArrayList.put(event, eventDate);
             }
         }
-
-        try {
-            filterdArrayList.put(new Event("", "WORK", "", "", new String[]{}, 0, 0, "", "", new double[]{}, "", ""), formatter.parse(filterDate.getYear() + "-" + filterDate.getMonth().getValue() + "-23"));
-        } catch(ParseException ignored) { }
 
         return filterdArrayList;
     }
