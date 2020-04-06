@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nextevent.Calendar.CalendarEventRecyclerViewAdapter;
 import com.nextevent.Calendar.CalendarRecyclerViewAdapter;
 import com.nextevent.DatabaseHandler;
 import com.nextevent.JavaBeans.CalendarMonth;
@@ -57,10 +58,15 @@ public class CalendarFragment extends Fragment {
             calendarMonths.add(new CalendarMonth(currentMonth.plusMonths(i), currentEvents));
         }
 
-        //Set up the RecyclerView
+        //Set up the Calendar Events RecyclerView
+        RecyclerView calendarEventRecyclerView = view.findViewById(R.id.calendarEventsRecyclerView);
+        calendarEventRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        calendarEventRecyclerView.setAdapter(new CalendarEventRecyclerViewAdapter(new ArrayList<Event>()));
+
+        //Set up the Calendar RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.calendarRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths));
+        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths, calendarEventRecyclerView));
 
         //Make sure to scroll to the current month
         recyclerView.scrollToPosition(12);
