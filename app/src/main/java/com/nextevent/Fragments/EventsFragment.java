@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import ca.alidali.mainapi.APIResponse;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
+import com.nextevent.API.APIResponse;
 import com.nextevent.API.EventSingleton;
 import com.nextevent.JavaBeans.CustomRecyclerviewAdapter;
 import com.nextevent.JavaBeans.Event;
@@ -31,7 +31,8 @@ import static com.nextevent.MainActivity.fab;
 
 /**
  * @author Ghaith Darwish
- * @Last Modified: 30/03/2020
+ * @Last Modified: 07/04/2020
+ * @since 30/03/2020
  */
 public class EventsFragment extends Fragment implements APIResponse {
 
@@ -59,7 +60,7 @@ public class EventsFragment extends Fragment implements APIResponse {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         noEventsText = view.findViewById(R.id.noEventsText);
         // API KEY
-        headers.put("Authorization", "Bearer l5V8mMsVhA99CwkPxc7T2E9IU_SCxzJPxQDdqQua");
+        headers.put("Authorization", getString(R.string.api_key));
 
         // creating new instance of CustomRecyclerviewAdapter
         adapter = new CustomRecyclerviewAdapter(events, getActivity(), R.id.eventToDetail, false);
