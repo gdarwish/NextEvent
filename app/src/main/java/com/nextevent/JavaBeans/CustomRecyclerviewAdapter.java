@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Ghaith Darwish
- * @Last modified: 30/03/2020
+ * @since 07/04/2020
  */
 public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecyclerviewAdapter.CustomViewHolder> {
 
@@ -75,6 +75,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     /**
      * Setting the ratingBer stars according to the rank
+     *
      * @param rank
      * @param ratingBar
      */
@@ -129,9 +130,9 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
             this.deleteButton = itemView.findViewById(R.id.deleteButton);
             itemView.setOnClickListener(this);
 
-            if (showDelete){
+            if (showDelete) {
                 deleteButton.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 deleteButton.setVisibility(View.GONE);
             }
 
@@ -148,7 +149,15 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event event = events.get(getAdapterPosition());
-                                    db.deleteEvent(event.getId());
+                                    event.setIsSaved(false);
+
+                                    //Check if the event still needs to be in the database
+                                    if(event.getIsAdded() == 1) {
+                                        db.updateEvent(event);
+                                    } else {
+                                        db.deleteEvent(event.getId());
+                                    }
+
                                     events.remove(event);
                                     notifyItemRemoved(getAdapterPosition());
                                 }
