@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nextevent.DatabaseHandler;
-import com.nextevent.JavaBeans.DepthPageTransformer;
 import com.nextevent.JavaBeans.ViewPagerDetailAdapter;
 import com.nextevent.JavaBeans.Event;
+import com.nextevent.JavaBeans.ZoomOutPageTransformer;
 import com.nextevent.R;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class DetailViewPagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_view_pager, container, false);
         viewPager = view.findViewById(R.id.viewPager);
         // Set ViewPager animation
-        viewPager.setPageTransformer(true, new DepthPageTransformer());
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         adapter = new ViewPagerDetailAdapter(getChildFragmentManager(), events);
         adapter.getItem(adapter.getItemPosition(event));
         viewPager.setAdapter(adapter);
