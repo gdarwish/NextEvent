@@ -7,7 +7,8 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Ghaith Darwish
- * @since 01/04/2020
+ * @author Abel Anderson
+ * @since 06/04/2020
  */
 public class Event implements Parcelable {
 
@@ -23,18 +24,10 @@ public class Event implements Parcelable {
     private double[] location;
     private String country;
     private String image;
+    private int isSaved = 0;
+    private int isAdded = 0;
 
-    private double lang;
-    private double lat;
-
-    public Event(String title, String start, String country, String image) {
-        this.title = title;
-        this.start = start;
-        this.country = country;
-        this.image = image;
-    }
-
-    public Event(String id, String title, String description, String category, String[] labels, int rank, int duration, String start, String end, double[] location, String country, String image) {
+    public Event(String id, String title, String description, String category, String[] labels, int rank, int duration, String start, String end, double[] location, String country, String image, int isSaved, int isAdded) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -47,6 +40,8 @@ public class Event implements Parcelable {
         this.location = location;
         this.country = country;
         this.image = image;
+        this.isSaved = isSaved;
+        this.isAdded = isAdded;
     }
 
     public double getLang() {
@@ -85,10 +80,6 @@ public class Event implements Parcelable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         if (!description.isEmpty()){
             return description;
@@ -96,72 +87,52 @@ public class Event implements Parcelable {
         return "No description...";
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String[] getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
-        this.labels = labels;
-    }
-
     public int getRank() {
         return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public String getStart() {
         return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
     }
 
     public String getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
     public double[] getLocation() {
         return location;
-    }
-
-    public void setLocation(double[] location) {
-        this.location = location;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(boolean isSaved) {
+        this.isSaved = isSaved ? 1 : 0;
+    }
+
+    public int getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded ? 1 : 0;
     }
 
     // get the image URL by event category

@@ -17,8 +17,8 @@ import java.util.Arrays;
  * Handles Database queries for the app.
  *
  * @author Abel Anderson
- * @version 1.2.2
- * @since 30/03/2020
+ * @version 1.3
+ * @since 06/04/2020
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -42,6 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String COLUMN_COUNTRY = "country";
     private static final String COLUMN_IMAGE = "image";
     private static final String COLUMN_IS_SAVED = "is_saved";
+    private static final String COLUMN_IS_ADDED = "is_added";
 
     //Labels Table
     private static final String TABLE_LABELS = "labels";
@@ -65,7 +66,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             COLUMN_LATITUDE + " REAL," +
             COLUMN_COUNTRY + " TEXT," +
             COLUMN_IMAGE + " TEXT," +
-            COLUMN_IS_SAVED + " INTEGER)";
+            COLUMN_IS_SAVED + " INTEGER," +
+            COLUMN_IS_ADDED + " INTEGER)";
 
     //Labels Table
     private static final String CREATE_LABELS_TABLE = "CREATE TABLE " +
@@ -131,12 +133,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_LATITUDE, event.getLat());
         values.put(COLUMN_COUNTRY, event.getCountry());
         values.put(COLUMN_IMAGE, event.getImage());
+        values.put(COLUMN_IS_SAVED, event.getIsSaved());
+        values.put(COLUMN_IS_ADDED, event.getIsAdded());
 
         //Insert the Data & close the Database
         db.insert(TABLE_EVENTS, null, values);
 
         //Create Labels for Event
-        for ( String label : event.getLabels() ) {
+        for (String label : event.getLabels()) {
             ContentValues labelValues = new ContentValues();
             labelValues.put(COLUMN_EVENT_ID, event.getId());
             labelValues.put(COLUMN_NAME, label);
@@ -157,7 +161,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Event event = null;
         Cursor cursor = db.query(TABLE_EVENTS, new String[]{
-                COLUMN_ID, COLUMN_TITLE, COLUMN_DESCRIPTION, COLUMN_CATEGORY, COLUMN_RANK, COLUMN_DURATION, COLUMN_START, COLUMN_END, COLUMN_LONGITUDE, COLUMN_LATITUDE, COLUMN_COUNTRY, COLUMN_IMAGE
+                COLUMN_ID, COLUMN_TITLE, COLUMN_DESCRIPTION, COLUMN_CATEGORY, COLUMN_RANK, COLUMN_DURATION, COLUMN_START, COLUMN_END, COLUMN_LONGITUDE, COLUMN_LATITUDE, COLUMN_COUNTRY, COLUMN_IMAGE, COLUMN_IS_SAVED, COLUMN_IS_ADDED
         }, COLUMN_ID + "= ?", new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -173,10 +177,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     cursor.getString(7),
                     new double[]{cursor.getDouble(8), cursor.getDouble(9)},
                     cursor.getString(10),
-                    cursor.getString(11)
+                    cursor.getString(11),
+                    cursor.getInt(12),
+                    cursor.getInt(13)
             );
         }
-
+        cursor.close();
         db.close();
         return event;
     }
@@ -204,36 +210,106 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     cursor.getString(7),
                     new double[]{cursor.getDouble(8), cursor.getDouble(9)},
                     cursor.getString(10),
-                    cursor.getString(11)
+                    cursor.getString(11),
+                    cursor.getInt(12),
+                    cursor.getInt(13)
             ));
         }
+        cursor.close();
         db.close();
         return equipment;
     }
 
     /**
+     * Grab all the saved events from the table.
+     *
+     * @return An ArrayList of Events.
+     */
+    public ArrayList<Event> getSavedEvents() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS + " WHERE " + COLUMN_IS_SAVED + " = 1",
+                null);
+        ArrayList<Event> equipment = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            equipment.add(new Event(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    getEventLabels(cursor.getString(0)),
+                    cursor.getInt(4),
+                    cursor.getInt(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    new double[]{cursor.getDouble(8), cursor.getDouble(9)},
+                    cursor.getString(10),
+                    cursor.getString(11),
+                    cursor.getInt(12),
+                    cursor.getInt(13)
+            ));
+        }
+        cursor.close();
+        db.close();
+        return equipment;
+    }
+
+    /**
+     * Grab all the added events from the table.
+     *
+     * @return An ArrayList of Events.
+     */
+    public ArrayList<Event> getAddedEvents() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS + " WHERE " + COLUMN_IS_ADDED + " = 1",
+                null);
+        ArrayList<Event> equipment = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            equipment.add(new Event(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    getEventLabels(cursor.getString(0)),
+                    cursor.getInt(4),
+                    cursor.getInt(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    new double[]{cursor.getDouble(8), cursor.getDouble(9)},
+                    cursor.getString(10),
+                    cursor.getString(11),
+                    cursor.getInt(12),
+                    cursor.getInt(13)
+            ));
+        }
+        cursor.close();
+        db.close();
+        return equipment;
+    }
+
+
+    /**
      * Get all the Labels for a Specified Event.
+     *
      * @param eventId The Event to get Labels for.
      * @return An array of Labels
      */
     private String[] getEventLabels(String eventId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LABELS +
-                " WHERE " + COLUMN_EVENT_ID + " = \"" + eventId + "\"", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LABELS + " WHERE " + COLUMN_EVENT_ID + " = \"" + eventId + "\"", null);
 
         ArrayList<String> labels = new ArrayList<>();
-
         while (cursor.moveToNext()) {
             labels.add(cursor.getString(2));
         }
 
+        cursor.close();
         return Arrays.copyOf(labels.toArray(), labels.size(), String[].class);
     }
 
     // UPDATE
 
     /**
-     * Update an event on the table.
+     * Update an event on the table. This only update the is_saved and is_added columns. The user can never change any other column
      *
      * @param event The event you are updating.
      * @return The verification status from the table.
@@ -241,20 +317,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateEvent(Event event) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, event.getTitle());
-        values.put(COLUMN_DESCRIPTION, event.getDescription());
-        values.put(COLUMN_CATEGORY, event.getCategory());
-        values.put(COLUMN_RANK, event.getRank());
-        values.put(COLUMN_DURATION, event.getDuration());
-        values.put(COLUMN_START, event.getStart());
-        values.put(COLUMN_END, event.getEnd());
-        values.put(COLUMN_LONGITUDE, event.getLang());
-        values.put(COLUMN_LATITUDE, event.getLat());
-        values.put(COLUMN_COUNTRY, event.getCountry());
-        values.put(COLUMN_IMAGE, event.getImage());
+        values.put(COLUMN_IS_SAVED, event.getIsSaved());
+        values.put(COLUMN_IS_ADDED, event.getIsAdded());
         return db.update(TABLE_EVENTS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(event.getId())});
     }
-
 
     /**
      * Delete an event from the table.

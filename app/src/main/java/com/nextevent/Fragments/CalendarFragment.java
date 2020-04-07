@@ -44,7 +44,7 @@ public class CalendarFragment extends Fragment {
 
         //Get all events from the Database
         DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Event> events = db.getAllEvents();
+        ArrayList<Event> events = db.getAddedEvents();
 
         //Create new ArrayList for Adapter
         ArrayList<CalendarMonth> calendarMonths = new ArrayList<>();
