@@ -68,6 +68,10 @@ public class Event implements Parcelable {
         return start.substring(0, 10).replace('-', '/');
     }
 
+    public String getFormattedStartDate() {
+        return getParsableStartDate() + " - " + (!start.substring(11, 16).equals("00:00") ? start.substring(11,16) : "All Day");
+    }
+
     public String getId() {
         return id;
     }

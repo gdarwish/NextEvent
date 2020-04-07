@@ -37,7 +37,7 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
     @Override
     public void onBindViewHolder(@NonNull CalendarEventViewHolder holder, int position) {
         holder.getTitleTextView().setText(events.get(position).getTitle());
-        holder.getDateTextView().setText(events.get(position).getParsableStartDate());
+        holder.getDateTextView().setText(events.get(position).getFormattedStartDate());
         holder.getCountryTextView().setText(events.get(position).getCountry());
     }
 
