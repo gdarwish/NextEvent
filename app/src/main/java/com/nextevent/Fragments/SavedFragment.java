@@ -21,14 +21,14 @@ import java.util.ArrayList;
 
 /**
  * @author Ghaith Darwish
- * @last modified: 01/04/2020
+ * @since 06/04/2020
  */
 public class SavedFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    CustomRecyclerviewAdapter adapter;
-    ArrayList<Event> events;
-    TextView savedHint;
+    private RecyclerView recyclerView;
+    private CustomRecyclerviewAdapter adapter;
+    private ArrayList<Event> events;
+    private TextView savedHint;
 
     public SavedFragment() {
         // Required empty public constructor
@@ -45,7 +45,7 @@ public class SavedFragment extends Fragment {
         DatabaseHandler db = new DatabaseHandler(getContext());
 
         // get all events from the database and store in events ArrayList
-        events = db.getAllEvents();
+        events = db.getSavedEvents();
 
         // check if there's any save events
         if (events.size() > 0){
