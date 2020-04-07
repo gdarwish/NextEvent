@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 
 /**
  * @author Ghaith Darwish
- * @author Abel Anderson
+ * @Last Modified: 07/04/2020
  * @since 06/04/2020
  */
 public class DetailEventFragment extends Fragment {
@@ -36,7 +36,7 @@ public class DetailEventFragment extends Fragment {
     private TextView description;
     private ImageView eventImage;
 
-    private ImageButton addButton;
+    private ImageButton saveButton;
     private ImageButton webButton;
     private ImageButton directionButton;
     private ImageButton shareButton;
@@ -66,7 +66,7 @@ public class DetailEventFragment extends Fragment {
         date = view.findViewById(R.id.dateText);
         location = view.findViewById(R.id.locationText);
         description = view.findViewById(R.id.descriptionText);
-        addButton = view.findViewById(R.id.saveButton);
+        saveButton = view.findViewById(R.id.saveButton);
         webButton = view.findViewById(R.id.webButton);
         directionButton = view.findViewById(R.id.directionsButton);
         shareButton = view.findViewById(R.id.shareButton);
@@ -94,17 +94,20 @@ public class DetailEventFragment extends Fragment {
             labels.addView(textView);
         }
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @author Abel Anderson
+             */
             @Override
             public void onClick(View view) {
                 // add event to the database if it's not added already
                 Event dbEvent = db.getEvent(event.getId());
                 event.setIsSaved(true);
 
-                if(dbEvent == null) {
+                if (dbEvent == null) {
                     db.addEvent(event);
                     Toast.makeText(getContext(), "Event saved", Toast.LENGTH_SHORT).show();
-                } else if(dbEvent.getIsSaved() != 1) {
+                } else if (dbEvent.getIsSaved() != 1) {
                     db.updateEvent(event);
                     Toast.makeText(getContext(), "Event saved", Toast.LENGTH_SHORT).show();
                 } else {
@@ -152,15 +155,18 @@ public class DetailEventFragment extends Fragment {
         });
 
         addEventButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @author Abel Anderson
+             */
             @Override
             public void onClick(View view) {
                 Event dbEvent = db.getEvent(event.getId());
                 event.setIsAdded(true);
 
-                if(dbEvent == null) {
+                if (dbEvent == null) {
                     db.addEvent(event);
                     Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
-                } else if(dbEvent.getIsAdded() != 1) {
+                } else if (dbEvent.getIsAdded() != 1) {
                     db.updateEvent(event);
                     Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
                 } else {
@@ -168,7 +174,19 @@ public class DetailEventFragment extends Fragment {
                 }
             }
         });
-
         return view;
+    }
+
+    /**
+     * returns new instance of DetailEventFragment
+     * @param event
+     * @return
+     */
+    public static DetailEventFragment newInstance(Event event) {
+        DetailEventFragment fragment = new DetailEventFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("event", event);
+        fragment.setArguments(args);
+        return fragment;
     }
 }
