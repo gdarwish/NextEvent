@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nextevent.DatabaseHandler;
-import com.nextevent.JavaBeans.DetailAdapter;
+import com.nextevent.JavaBeans.ViewPagerDetailAdapter;
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
 
@@ -26,7 +26,7 @@ public class DetailViewPagerFragment extends Fragment {
 
     private ArrayList<Event> events;
     private ViewPager viewPager;
-    private DetailAdapter adapter;
+    private ViewPagerDetailAdapter adapter;
     DatabaseHandler db;
     Event event;
 
@@ -49,7 +49,7 @@ public class DetailViewPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_view_pager, container, false);
         viewPager = view.findViewById(R.id.viewPager);
-        adapter = new DetailAdapter(getChildFragmentManager(), events);
+        adapter = new ViewPagerDetailAdapter(getChildFragmentManager(), events);
         adapter.getItem(adapter.getItemPosition(event));
         viewPager.setAdapter(adapter);
         return view;

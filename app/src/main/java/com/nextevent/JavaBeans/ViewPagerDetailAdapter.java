@@ -14,11 +14,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
  * @Last Modified: 04/07/2020
  * @since 04/07/2020
  */
-public class DetailAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerDetailAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<Event> events;
 
-    public DetailAdapter(@NonNull FragmentManager fm, ArrayList<Event> events) {
+    public ViewPagerDetailAdapter(@NonNull FragmentManager fm, ArrayList<Event> events) {
         super(fm);
         this.events = events;
     }

@@ -1,7 +1,6 @@
 package com.nextevent.Calendar;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,11 +27,12 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
 
     private HashMap<LocalDate, ArrayList<Event>> events;
     private RecyclerView recyclerView;
-    private DayViewContainer lastSelectedDay;
+    private CalendarRecyclerViewAdapter parentRecyclerViewAdapter;
 
-    CustomDayBinder(HashMap<LocalDate, ArrayList<Event>> events, RecyclerView recyclerView) {
+    CustomDayBinder(HashMap<LocalDate, ArrayList<Event>> events, RecyclerView recyclerView, CalendarRecyclerViewAdapter parentRecyclerViewAdapter) {
         this.events = events;
         this.recyclerView = recyclerView;
+        this.parentRecyclerViewAdapter = parentRecyclerViewAdapter;
     }
 
     /**
@@ -45,6 +45,7 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
     public void bind(DayViewContainer dayViewContainer, CalendarDay day) {
         final DayViewContainer viewContainer = dayViewContainer;
 
+        viewContainer.setDay(day);
         viewContainer.getDayText().setText(day.getDay() + "");
 
         if (events.containsKey(day.getDate())) {
@@ -55,7 +56,7 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
             viewContainer.setEvents(events.get(day.getDate()));
         }
 
-        if(day.getDate().equals(LocalDate.now())) {
+        if (day.getDate().equals(LocalDate.now())) {
             viewContainer.getDayView().setBackgroundResource(R.drawable.circle);
         } else {
             viewContainer.getDayView().setBackgroundResource(R.drawable.day_unselected);
@@ -68,12 +69,16 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
                 view.setBackgroundResource(R.drawable.day_selected);
                 viewContainer.getDayText().setTextColor(Color.WHITE);
 
-                if(lastSelectedDay != null) {
-                    lastSelectedDay.getView().setBackgroundResource(R.drawable.day_unselected);
-                    lastSelectedDay.getDayText().setTextColor(Color.parseColor("#808080"));
+                if (parentRecyclerViewAdapter.getLastSelectedDay() != null) {
+                    if (parentRecyclerViewAdapter.getLastSelectedDay().getDay().getDate().equals(LocalDate.now())) {
+                        parentRecyclerViewAdapter.getLastSelectedDay().getDayView().setBackgroundResource(R.drawable.circle);
+                    } else {
+                        parentRecyclerViewAdapter.getLastSelectedDay().getDayView().setBackgroundResource(R.drawable.day_unselected);
+                    }
+                    parentRecyclerViewAdapter.getLastSelectedDay().getDayText().setTextColor(Color.parseColor("#808080"));
                 }
 
-                lastSelectedDay = viewContainer;
+                parentRecyclerViewAdapter.setLastSelectedDay(viewContainer);
 
                 CalendarEventRecyclerViewAdapter recyclerViewAdapter = (CalendarEventRecyclerViewAdapter) recyclerView.getAdapter();
                 recyclerViewAdapter.events = viewContainer.getEvents();
