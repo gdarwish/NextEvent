@@ -30,6 +30,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
 
     private ArrayList<CalendarMonth> calendarMonths;
     private RecyclerView recyclerView;
+    private DayViewContainer lastSelectedDay;
 
     public CalendarRecyclerViewAdapter(ArrayList<CalendarMonth> calendarMonths, RecyclerView recyclerView) {
         this.calendarMonths = calendarMonths;
@@ -48,7 +49,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
 
-        holder.getCalendarView().setDayBinder(new CustomDayBinder(calendarMonths.get(position).getEvents(), recyclerView));
+        holder.getCalendarView().setDayBinder(new CustomDayBinder(calendarMonths.get(position).getEvents(), recyclerView, this));
         holder.getCalendarView().setup(calendarMonths.get(position).getMonth(), calendarMonths.get(position).getMonth(), firstDayOfWeek);
         String text = calendarMonths.get(position).getMonth().getMonth().toString() + " - " + calendarMonths.get(position).getMonth().getYear();
         holder.getMonthTextView().setText(text);
@@ -77,5 +78,13 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         public TextView getMonthTextView() {
             return monthTextView;
         }
+    }
+
+    public DayViewContainer getLastSelectedDay() {
+        return lastSelectedDay;
+    }
+
+    public void setLastSelectedDay(DayViewContainer lastSelectedDay) {
+        this.lastSelectedDay = lastSelectedDay;
     }
 }
