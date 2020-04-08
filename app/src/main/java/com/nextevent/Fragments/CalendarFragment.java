@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static com.nextevent.MainActivity.fab;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,6 +43,8 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        fab.hide();
 
         //Get all events from the Database
         DatabaseHandler db = new DatabaseHandler(getContext());
@@ -61,7 +65,7 @@ public class CalendarFragment extends Fragment {
         //Set up the Calendar Events RecyclerView
         RecyclerView calendarEventRecyclerView = view.findViewById(R.id.calendarEventsRecyclerView);
         calendarEventRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        calendarEventRecyclerView.setAdapter(new CalendarEventRecyclerViewAdapter(new ArrayList<Event>()));
+        calendarEventRecyclerView.setAdapter(new CalendarEventRecyclerViewAdapter(new ArrayList<Event>(), getContext()));
 
         //Set up the Calendar RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.calendarRecyclerView);
