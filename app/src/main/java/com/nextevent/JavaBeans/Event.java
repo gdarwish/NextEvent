@@ -139,52 +139,52 @@ public class Event implements Parcelable {
     public String getImage() {
         switch (category) {
             case "school-holidays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/school-holiday.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Schoolholidays.png";
                 break;
             case "public-holidays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/public-holiday.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Publicholidays.png";
                 break;
             case "observances":
-                image = "https://gdarwish.scweb.ca/NextEventImages/observances.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Observances.png";
                 break;
             case "politics":
-                image = "https://gdarwish.scweb.ca/NextEventImages/politics.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Politics.png";
                 break;
             case "conferences":
-                image = "https://gdarwish.scweb.ca/NextEventImages/conferences.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Conferences.png";
                 break;
             case "expos":
-                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Expos.png";
                 break;
             case "festivals":
-                image = "https://gdarwish.scweb.ca/NextEventImages/festivals.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Festivals.png";
                 break;
             case "performing-arts":
-                image = "https://gdarwish.scweb.ca/NextEventImages/performing.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Performingarts.png";
                 break;
             case "community":
-                image = "https://gdarwish.scweb.ca/NextEventImages/community.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Community.png";
                 break;
             case "sports":
-                image = "https://gdarwish.scweb.ca/NextEventImages/sports.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Sports.png";
                 break;
             case "daylight-savings":
-                image = "https://gdarwish.scweb.ca/NextEventImages/daylight.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Daylightsavings.png";
                 break;
             case "airport-delays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/airport.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Airportdelays.png";
                 break;
             case "severe-weather":
-                image = "https://gdarwish.scweb.ca/NextEventImages/severe.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Severeweather.png";
                 break;
             case "disasters":
-                image = "https://gdarwish.scweb.ca/NextEventImages/disasters.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Disasters.png";
                 break;
             case "terror":
-                image = "https://gdarwish.scweb.ca/NextEventImages/terror.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Terror.png";
                 break;
             case "concerts":
-                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Concerts.png";
                 break;
             default:
                 image = "default image";
