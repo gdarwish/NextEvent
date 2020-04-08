@@ -1,12 +1,15 @@
 package com.nextevent.Fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +34,7 @@ import static com.nextevent.MainActivity.fab;
 
 /**
  * @author Ghaith Darwish
- * @Last Modified: 07/04/2020
+ * @Last Modified: 08/04/2020
  * @since 30/03/2020
  */
 public class EventsFragment extends Fragment implements APIResponse {
@@ -54,10 +57,20 @@ public class EventsFragment extends Fragment implements APIResponse {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_events, container, false);
 
+        // Create SharedPreferences for storing and changing the layout
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int layout = sharedPreferences.getInt("LAYOUT", R.layout.event_item_model);
+
         fab.hide();
         searBar = view.findViewById(R.id.searchBar);
         recyclerView = view.findViewById(R.id.eventRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // setting the LayoutManager according to which layout is displayed
+        if (layout == R.layout.recycler_grid_layout)
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        else
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         noEventsText = view.findViewById(R.id.noEventsText);
         // API KEY
         headers.put("Authorization", getString(R.string.api_key));

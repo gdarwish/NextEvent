@@ -16,4 +16,5 @@
     <string name="searchHint">Search for event...</string>
     <string name="HintText">Search for events...</string>
     <string name="SavedHint">There isn\'t any saved events...</string>
+    <string name="layout">Layout Style:</string>
 </resources>

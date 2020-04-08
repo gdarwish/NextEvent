@@ -3,7 +3,9 @@ package com.nextevent.JavaBeans;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * @author Ghaith Darwish
  * @since 07/04/2020
+ * @Last Modified: 08/04/2020
  */
 public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecyclerviewAdapter.CustomViewHolder> {
 
@@ -35,18 +38,24 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
     private DatabaseHandler db;
     private boolean showDelete;
 
+    int layout;
+
     public CustomRecyclerviewAdapter(ArrayList<Event> events, Context context, int id, boolean showDelete) {
         this.events = events;
         this.context = context;
         this.id = id;
         db = new DatabaseHandler(context);
         this.showDelete = showDelete;
+
+        // Create SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        layout = sharedPreferences.getInt("LAYOUT", R.layout.event_item_model);
     }
 
     @NonNull
     @Override
     public CustomRecyclerviewAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item_model, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new CustomViewHolder(view, id);
     }
 
