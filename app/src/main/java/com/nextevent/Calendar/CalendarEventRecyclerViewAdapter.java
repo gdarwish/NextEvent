@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 /**
  * @author Abel Anderson
- * @since 04/04/2020
  * @version 1.0
+ * @since 04/04/2020
  */
 
 public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<CalendarEventRecyclerViewAdapter.CalendarEventViewHolder> {
@@ -38,7 +38,6 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
     public void onBindViewHolder(@NonNull CalendarEventViewHolder holder, int position) {
         holder.getTitleTextView().setText(events.get(position).getTitle());
         holder.getDateTextView().setText(events.get(position).getParsableStartDate());
-        holder.getCountryTextView().setText(events.get(position).getCountry());
     }
 
     @Override
@@ -49,14 +48,12 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
     class CalendarEventViewHolder extends RecyclerView.ViewHolder {
         private TextView titleTextView;
         private TextView dateTextView;
-        private TextView countryTextView;
 
         CalendarEventViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleTextView = itemView.findViewById(R.id.titleTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
-            countryTextView = itemView.findViewById(R.id.countryTextView);
         }
 
         public TextView getTitleTextView() {
@@ -67,8 +64,5 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
             return dateTextView;
         }
 
-        public TextView getCountryTextView() {
-            return countryTextView;
-        }
     }
 }

@@ -13,5 +13,6 @@
     <!-- Font Values -->
     <dimen name="large_title">24dp</dimen>
     <dimen name="regular_text">16dp</dimen>
+    <dimen name="title">18dp</dimen>
 
 </resources>
