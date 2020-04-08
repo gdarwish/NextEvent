@@ -3,8 +3,6 @@ package com.nextevent.Calendar;
 import android.graphics.Color;
 import android.view.View;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.ui.DayBinder;
 import com.nextevent.JavaBeans.Event;
@@ -26,12 +24,12 @@ import java.util.HashMap;
 public class CustomDayBinder implements DayBinder<DayViewContainer> {
 
     private HashMap<LocalDate, ArrayList<Event>> events;
-    private RecyclerView recyclerView;
+    private CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter;
     private CalendarRecyclerViewAdapter parentRecyclerViewAdapter;
 
-    CustomDayBinder(HashMap<LocalDate, ArrayList<Event>> events, RecyclerView recyclerView, CalendarRecyclerViewAdapter parentRecyclerViewAdapter) {
+    CustomDayBinder(HashMap<LocalDate, ArrayList<Event>> events, CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter, CalendarRecyclerViewAdapter parentRecyclerViewAdapter) {
         this.events = events;
-        this.recyclerView = recyclerView;
+        this.eventRecyclerViewAdapter = eventRecyclerViewAdapter;
         this.parentRecyclerViewAdapter = parentRecyclerViewAdapter;
     }
 
@@ -45,9 +43,11 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
     public void bind(DayViewContainer dayViewContainer, CalendarDay day) {
         final DayViewContainer viewContainer = dayViewContainer;
 
+        //Set the Day & the day Text
         viewContainer.setDay(day);
         viewContainer.getDayText().setText(day.getDay() + "");
 
+        //Check if there are any events on that day
         if (events.containsKey(day.getDate())) {
             for (Event ignored : events.get(day.getDate())) {
                 viewContainer.getEventDisplay().addView(View.inflate(viewContainer.getView().getContext(), R.layout.calendar_event_circle, null));
@@ -56,19 +56,24 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
             viewContainer.setEvents(events.get(day.getDate()));
         }
 
+        //Check if the day is the current date
         if (day.getDate().equals(LocalDate.now())) {
             viewContainer.getDayView().setBackgroundResource(R.drawable.circle);
         } else {
             viewContainer.getDayView().setBackgroundResource(R.drawable.day_unselected);
         }
 
+        //Set an onClickListener for the DayView
         viewContainer.getDayView().setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+
+                //Style the selected day
                 view.setBackgroundResource(R.drawable.day_selected);
                 viewContainer.getDayText().setTextColor(Color.WHITE);
 
+                //Make sure the last day gets unselected
                 if (parentRecyclerViewAdapter.getLastSelectedDay() != null) {
                     if (parentRecyclerViewAdapter.getLastSelectedDay().getDay().getDate().equals(LocalDate.now())) {
                         parentRecyclerViewAdapter.getLastSelectedDay().getDayView().setBackgroundResource(R.drawable.circle);
@@ -78,17 +83,19 @@ public class CustomDayBinder implements DayBinder<DayViewContainer> {
                     parentRecyclerViewAdapter.getLastSelectedDay().getDayText().setTextColor(Color.parseColor("#808080"));
                 }
 
+                //Set the selectedDay to this date
                 parentRecyclerViewAdapter.setLastSelectedDay(viewContainer);
 
-                CalendarEventRecyclerViewAdapter recyclerViewAdapter = (CalendarEventRecyclerViewAdapter) recyclerView.getAdapter();
-                recyclerViewAdapter.events = viewContainer.getEvents();
-                recyclerViewAdapter.notifyDataSetChanged();
+                //Update the EventRecyclerViewAdapter with the current day's events
+                eventRecyclerViewAdapter.setDayEventsView(viewContainer.getEventDisplay());
+                eventRecyclerViewAdapter.setEvents(viewContainer.getEvents());
+                eventRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public DayViewContainer create(View view) {
-        return new DayViewContainer(view, recyclerView);
+        return new DayViewContainer(view);
     }
 }

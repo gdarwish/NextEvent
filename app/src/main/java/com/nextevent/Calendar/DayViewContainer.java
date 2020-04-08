@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 import com.nextevent.JavaBeans.Event;
@@ -29,7 +27,7 @@ class DayViewContainer extends ViewContainer{
     private ArrayList<Event> events;
     private CalendarDay day;
 
-    DayViewContainer(View dayView, final RecyclerView recyclerView) {
+    DayViewContainer(View dayView) {
         super(dayView);
 
         this.dayView = dayView;
