@@ -54,7 +54,7 @@ public class CustomRecyclerviewAdapter extends RecyclerView.Adapter<CustomRecycl
     public void onBindViewHolder(@NonNull CustomRecyclerviewAdapter.CustomViewHolder holder, int position) {
         Event event = events.get(position);
         holder.title.setText(event.getTitle());
-        holder.date.setText(event.getStart());
+        holder.date.setText(event.getFormattedStartDate());
         holder.location.setText(event.getCountry());
         // Loading images with Picasso
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(holder.image);

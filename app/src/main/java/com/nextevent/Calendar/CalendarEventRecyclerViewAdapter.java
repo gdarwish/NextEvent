@@ -1,12 +1,12 @@
 package com.nextevent.Calendar;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,28 +20,24 @@ import java.util.ArrayList;
 
 /**
  * @author Abel Anderson
- * @version 1.0
- * @since 04/04/2020
- *
- *
- * @Last Modified 07/04/2020 by
  * @author Ghaith Darwish
+ * @version 1.0
+ * @since 07/04/2020
  */
 
 public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<CalendarEventRecyclerViewAdapter.CalendarEventViewHolder> {
-    ArrayList<Event> events;
-    DatabaseHandler db;
-    Context context;
+    private ArrayList<Event> events;
+    private LinearLayout dayEventsView;
+    private DatabaseHandler db;
 
-    public CalendarEventRecyclerViewAdapter(ArrayList<Event> events, Context context) {
+    public CalendarEventRecyclerViewAdapter(ArrayList<Event> events) {
         this.events = events;
-        this.context = context;
     }
 
     @NonNull
     @Override
     public CalendarEventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.calendar_event, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_event, null);
         view.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return new CalendarEventViewHolder(view);
     }
@@ -65,6 +61,8 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
         CalendarEventViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            db = new DatabaseHandler(itemView.getContext());
+
             titleTextView = itemView.findViewById(R.id.titleTextView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
             deleteButton = itemView.findViewById(R.id.deleteButton);
@@ -73,20 +71,29 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
                 @Override
                 public void onClick(View view) {
                     // Creating AlertDialog when deleting an event
-                    new AlertDialog.Builder(context).setTitle("Delete")
+                    new AlertDialog.Builder(view.getContext()).setTitle("Delete")
                             .setMessage("Are you sure you want to delete " + events.get(getLayoutPosition()).getTitle() + " from you calendar?")
                             .setIcon(R.drawable.ic_warning_black_24dp)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Event event = events.get(getAdapterPosition());
-                                    // set event setIsAdded to false
+
+                                    //Set event isAdded to false
                                     event.setIsAdded(false);
-                                    db = new DatabaseHandler(context);
-                                    // update the database
-                                    db.updateEvent(event);
-                                    // remove the event from the list
+
+                                    //Check if we still need to keep the event
+                                    if (event.getIsSaved() == 1) {
+                                        db.updateEvent(event);
+                                    } else {
+                                        db.deleteEvent(event.getId());
+                                    }
+
+                                    //Remove the event from the list
                                     events.remove(event);
+
+                                    //Remove the eventCircle from the Day
+                                    dayEventsView.removeViewAt(0);
                                     notifyItemRemoved(getAdapterPosition());
                                 }
                             })
@@ -96,13 +103,20 @@ public class CalendarEventRecyclerViewAdapter extends RecyclerView.Adapter<Calen
             });
         }
 
-        public TextView getTitleTextView() {
+        TextView getTitleTextView() {
             return titleTextView;
         }
 
-        public TextView getDateTextView() {
+        TextView getDateTextView() {
             return dateTextView;
         }
+    }
 
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
+
+    public void setDayEventsView(LinearLayout dayEventsView) {
+        this.dayEventsView = dayEventsView;
     }
 }
