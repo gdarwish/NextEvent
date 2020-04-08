@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_events" >
         <action
             android:id="@+id/eventToDetail"
-            app:destination="@id/detailEventFragment2" />
+            app:destination="@id/detailEventFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -25,7 +29,11 @@
         tools:layout="@layout/fragment_saved" >
         <action
             android:id="@+id/action_savedFragment_to_detailViewPagerFragment"
-            app:destination="@id/detailViewPagerFragment" />
+            app:destination="@id/detailViewPagerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
