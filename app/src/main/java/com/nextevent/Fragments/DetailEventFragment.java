@@ -77,7 +77,7 @@ public class DetailEventFragment extends Fragment {
 
         // Setting the text from the event that was received from the bundle
         title.setText(event.getTitle());
-        date.setText(event.getStart());
+        date.setText(event.getFormattedStartDate());
         location.setText(event.getCountry());
         description.setText(event.getDescription());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(eventImage);

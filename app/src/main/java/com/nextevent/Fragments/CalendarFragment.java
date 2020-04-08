@@ -31,6 +31,10 @@ import static com.nextevent.MainActivity.fab;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * @author Abel Anderson
+ * @since 07/04/2020
+ * @version 1.3
  */
 public class CalendarFragment extends Fragment {
 
@@ -63,14 +67,16 @@ public class CalendarFragment extends Fragment {
         }
 
         //Set up the Calendar Events RecyclerView
+        CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter = new CalendarEventRecyclerViewAdapter(new ArrayList<Event>());
+
         RecyclerView calendarEventRecyclerView = view.findViewById(R.id.calendarEventsRecyclerView);
         calendarEventRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        calendarEventRecyclerView.setAdapter(new CalendarEventRecyclerViewAdapter(new ArrayList<Event>(), getContext()));
+        calendarEventRecyclerView.setAdapter(eventRecyclerViewAdapter);
 
         //Set up the Calendar RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.calendarRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths, calendarEventRecyclerView));
+        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths, eventRecyclerViewAdapter));
 
         //Make sure to scroll to the current month
         recyclerView.scrollToPosition(12);
