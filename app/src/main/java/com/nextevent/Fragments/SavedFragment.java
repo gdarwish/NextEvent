@@ -21,7 +21,8 @@ import java.util.ArrayList;
 
 /**
  * @author Ghaith Darwish
- * @since 06/04/2020
+ * @last Modified: 07/04/2020
+ * @since 04/01/2020
  */
 public class SavedFragment extends Fragment {
 
@@ -48,13 +49,13 @@ public class SavedFragment extends Fragment {
         events = db.getSavedEvents();
 
         // check if there's any save events
-        if (events.size() > 0){
+        if (events.size() > 0) {
             // hide the hint text
             savedHint.setVisibility(View.GONE);
         }
 
         // create CustomRecyclerviewAdapter object and give it the events lists, and savedEventToDetails id
-        adapter = new CustomRecyclerviewAdapter(events, getContext(), R.id.savedEventToDetails, true);
+        adapter = new CustomRecyclerviewAdapter(events, getContext(), R.id.action_savedFragment_to_detailViewPagerFragment, true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // set the recyclerview adapter
         recyclerView.setAdapter(adapter);
