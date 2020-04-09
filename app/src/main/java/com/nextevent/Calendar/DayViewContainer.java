@@ -4,26 +4,63 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.ui.ViewContainer;
+import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
+
+import java.util.ArrayList;
 
 /**
  * The DayViewContainer for the Calendar
  *
  * @author Abel Anderson
- * @since 02/04/2020
- * @version 1.2
+ * @since 06/04/2020
+ * @version 1.4
  */
 
-public class DayViewContainer extends ViewContainer {
+class DayViewContainer extends ViewContainer{
 
-    TextView dayText;
-    LinearLayout eventDisplay;
+    private View dayView;
+    private TextView dayText;
+    private LinearLayout eventDisplay;
+    private ArrayList<Event> events;
+    private CalendarDay day;
 
-    public DayViewContainer(View view) {
-        super(view);
+    DayViewContainer(View dayView) {
+        super(dayView);
 
-        dayText = view.findViewById(R.id.calendarDayText);
-        eventDisplay = view.findViewById(R.id.eventDisplay);
+        this.dayView = dayView;
+        this.events = new ArrayList<>();
+        this.dayText = dayView.findViewById(R.id.calendarDayText);
+        this.eventDisplay = dayView.findViewById(R.id.eventDisplay);
+    }
+
+    public View getDayView() {
+        return dayView;
+    }
+
+    public TextView getDayText() {
+        return dayText;
+    }
+
+    public LinearLayout getEventDisplay() {
+        return eventDisplay;
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<Event> events) {
+        this.events = events;
+    }
+
+    public CalendarDay getDay() {
+        return day;
+    }
+
+    public void setDay(CalendarDay day) {
+        this.day = day;
     }
 }

@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_events" >
         <action
             android:id="@+id/eventToDetail"
-            app:destination="@id/detailEventFragment2" />
+            app:destination="@id/detailEventFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -24,8 +28,12 @@
         android:label="Saved Events"
         tools:layout="@layout/fragment_saved" >
         <action
-            android:id="@+id/savedEventToDetails"
-            app:destination="@id/detailEventFragment2" />
+            android:id="@+id/action_savedFragment_to_detailViewPagerFragment"
+            app:destination="@id/detailViewPagerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -33,13 +41,18 @@
         android:label="Setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
-        android:id="@+id/detailEvent"
-        android:name="com.nextevent.ViewPager.DetailEvent"
-        android:label="detail_event"
-        tools:layout="@layout/detail_event" />
-    <fragment
         android:id="@+id/detailEventFragment2"
         android:name="com.nextevent.Fragments.DetailEventFragment"
         android:label="Detail Event"
         tools:layout="@layout/fragment_detail_event" />
+    <fragment
+        android:id="@+id/detailViewPagerFragment"
+        android:name="com.nextevent.Fragments.DetailViewPagerFragment"
+        android:label="Saved Events"
+        tools:layout="@layout/fragment_detail_view_pager" />
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="com.nextevent.Fragments.CreditsFragment"
+        android:label="Credits"
+        tools:layout="@layout/fragment_credits" />
 </navigation>

@@ -29,9 +29,12 @@ import java.util.Locale;
 public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRecyclerViewAdapter.CalendarViewHolder> {
 
     private ArrayList<CalendarMonth> calendarMonths;
+    private CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter;
+    private DayViewContainer lastSelectedDay;
 
-    public CalendarRecyclerViewAdapter(ArrayList<CalendarMonth> calendarMonths) {
+    public CalendarRecyclerViewAdapter(ArrayList<CalendarMonth> calendarMonths, CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter) {
         this.calendarMonths = calendarMonths;
+        this.eventRecyclerViewAdapter = eventRecyclerViewAdapter;
     }
 
     @NonNull
@@ -46,7 +49,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         DayOfWeek firstDayOfWeek = WeekFields.of(Locale.getDefault()).getFirstDayOfWeek();
 
-        holder.getCalendarView().setDayBinder(new CustomDayBinder(calendarMonths.get(position).getEvents()));
+        holder.getCalendarView().setDayBinder(new CustomDayBinder(calendarMonths.get(position).getEvents(), eventRecyclerViewAdapter, this));
         holder.getCalendarView().setup(calendarMonths.get(position).getMonth(), calendarMonths.get(position).getMonth(), firstDayOfWeek);
         String text = calendarMonths.get(position).getMonth().getMonth().toString() + " - " + calendarMonths.get(position).getMonth().getYear();
         holder.getMonthTextView().setText(text);
@@ -75,5 +78,13 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         public TextView getMonthTextView() {
             return monthTextView;
         }
+    }
+
+    public DayViewContainer getLastSelectedDay() {
+        return lastSelectedDay;
+    }
+
+    public void setLastSelectedDay(DayViewContainer lastSelectedDay) {
+        this.lastSelectedDay = lastSelectedDay;
     }
 }

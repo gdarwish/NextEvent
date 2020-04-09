@@ -22,29 +22,27 @@ import com.nextevent.JavaBeans.Event;
 import com.nextevent.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
-
 /**
  * @author Ghaith Darwish
- * @Last Modified: 30/03/2020
+ * @Last Modified: 07/04/2020
+ * @since 06/04/2020
  */
 public class DetailEventFragment extends Fragment {
 
-    Event event;
-    TextView date;
-    TextView location;
-    TextView title;
-    TextView description;
-    ImageView eventImage;
+    private Event event;
+    private TextView date;
+    private TextView location;
+    private TextView title;
+    private TextView description;
+    private ImageView eventImage;
 
-    ImageButton addButton;
-    ImageButton webButton;
-    ImageButton directionButton;
-    ImageButton shareButton;
-    Button addEventButton;
-    LinearLayout labels;
-    DatabaseHandler db;
+    private ImageButton saveButton;
+    private ImageButton webButton;
+    private ImageButton directionButton;
+    private ImageButton shareButton;
+    private Button addEventButton;
+    private LinearLayout labels;
+    private DatabaseHandler db;
 
     public DetailEventFragment() {
         // Required empty public constructor
@@ -59,14 +57,16 @@ public class DetailEventFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail_event, container, false);
+
         // link with xml
         title = view.findViewById(R.id.title);
         date = view.findViewById(R.id.dateText);
         location = view.findViewById(R.id.locationText);
         description = view.findViewById(R.id.descriptionText);
-        addButton = view.findViewById(R.id.saveButton);
+        saveButton = view.findViewById(R.id.saveButton);
         webButton = view.findViewById(R.id.webButton);
         directionButton = view.findViewById(R.id.directionsButton);
         shareButton = view.findViewById(R.id.shareButton);
@@ -77,10 +77,11 @@ public class DetailEventFragment extends Fragment {
 
         // Setting the text from the event that was received from the bundle
         title.setText(event.getTitle());
-        date.setText(event.getStart());
+        date.setText(event.getFormattedStartDate());
         location.setText(event.getCountry());
         description.setText(event.getDescription());
         Picasso.get().load(event.getImage()).placeholder(R.drawable.placeholder).into(eventImage);
+
         // Setting the label text from the event that was received from the bundle
         for (String label : event.getLabels()) {
             TextView textView = new TextView(getContext());
@@ -93,15 +94,24 @@ public class DetailEventFragment extends Fragment {
             labels.addView(textView);
         }
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @author Abel Anderson
+             */
             @Override
             public void onClick(View view) {
                 // add event to the database if it's not added already
-                if (!db.getAllEvents().contains(event)) {
+                Event dbEvent = db.getEvent(event.getId());
+                event.setIsSaved(true);
+
+                if (dbEvent == null) {
                     db.addEvent(event);
-                    Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Event saved", Toast.LENGTH_SHORT).show();
+                } else if (dbEvent.getIsSaved() != 1) {
+                    db.updateEvent(event);
+                    Toast.makeText(getContext(), "Event saved", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Event already added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Event already saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -145,11 +155,38 @@ public class DetailEventFragment extends Fragment {
         });
 
         addEventButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @author Abel Anderson
+             */
             @Override
             public void onClick(View view) {
-                // should add the event to schedule with some info (title, date....)
+                Event dbEvent = db.getEvent(event.getId());
+                event.setIsAdded(true);
+
+                if (dbEvent == null) {
+                    db.addEvent(event);
+                    Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
+                } else if (dbEvent.getIsAdded() != 1) {
+                    db.updateEvent(event);
+                    Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Event already added", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
+    }
+
+    /**
+     * returns new instance of DetailEventFragment
+     * @param event
+     * @return
+     */
+    public static DetailEventFragment newInstance(Event event) {
+        DetailEventFragment fragment = new DetailEventFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("event", event);
+        fragment.setArguments(args);
+        return fragment;
     }
 }

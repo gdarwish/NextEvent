@@ -7,7 +7,8 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Ghaith Darwish
- * @since 01/04/2020
+ * @author Abel Anderson
+ * @since 06/04/2020
  */
 public class Event implements Parcelable {
 
@@ -23,18 +24,10 @@ public class Event implements Parcelable {
     private double[] location;
     private String country;
     private String image;
+    private int isSaved = 0;
+    private int isAdded = 0;
 
-    private double lang;
-    private double lat;
-
-    public Event(String title, String start, String country, String image) {
-        this.title = title;
-        this.start = start;
-        this.country = country;
-        this.image = image;
-    }
-
-    public Event(String id, String title, String description, String category, String[] labels, int rank, int duration, String start, String end, double[] location, String country, String image) {
+    public Event(String id, String title, String description, String category, String[] labels, int rank, int duration, String start, String end, double[] location, String country, String image, int isSaved, int isAdded) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -47,6 +40,8 @@ public class Event implements Parcelable {
         this.location = location;
         this.country = country;
         this.image = image;
+        this.isSaved = isSaved;
+        this.isAdded = isAdded;
     }
 
     public double getLang() {
@@ -73,6 +68,10 @@ public class Event implements Parcelable {
         return start.substring(0, 10).replace('-', '/');
     }
 
+    public String getFormattedStartDate() {
+        return getParsableStartDate() + " - " + (!start.substring(11, 16).equals("00:00") ? start.substring(11,16) : "All Day");
+    }
+
     public String getId() {
         return id;
     }
@@ -85,10 +84,6 @@ public class Event implements Parcelable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         if (!description.isEmpty()){
             return description;
@@ -96,124 +91,104 @@ public class Event implements Parcelable {
         return "No description...";
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String[] getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
-        this.labels = labels;
-    }
-
     public int getRank() {
         return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public String getStart() {
         return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
     }
 
     public String getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
     public double[] getLocation() {
         return location;
-    }
-
-    public void setLocation(double[] location) {
-        this.location = location;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(boolean isSaved) {
+        this.isSaved = isSaved ? 1 : 0;
+    }
+
+    public int getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded ? 1 : 0;
     }
 
     // get the image URL by event category
     public String getImage() {
         switch (category) {
             case "school-holidays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/school-holiday.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Schoolholidays.png";
                 break;
             case "public-holidays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/public-holiday.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Publicholidays.png";
                 break;
             case "observances":
-                image = "https://gdarwish.scweb.ca/NextEventImages/observances.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Observances.png";
                 break;
             case "politics":
-                image = "https://gdarwish.scweb.ca/NextEventImages/politics.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Politics.png";
                 break;
             case "conferences":
-                image = "https://gdarwish.scweb.ca/NextEventImages/conferences.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Conferences.png";
                 break;
             case "expos":
-                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Expos.png";
                 break;
             case "festivals":
-                image = "https://gdarwish.scweb.ca/NextEventImages/festivals.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Festivals.png";
                 break;
             case "performing-arts":
-                image = "https://gdarwish.scweb.ca/NextEventImages/performing.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Performingarts.png";
                 break;
             case "community":
-                image = "https://gdarwish.scweb.ca/NextEventImages/community.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Community.png";
                 break;
             case "sports":
-                image = "https://gdarwish.scweb.ca/NextEventImages/sports.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Sports.png";
                 break;
             case "daylight-savings":
-                image = "https://gdarwish.scweb.ca/NextEventImages/daylight.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Daylightsavings.png";
                 break;
             case "airport-delays":
-                image = "https://gdarwish.scweb.ca/NextEventImages/airport.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Airportdelays.png";
                 break;
             case "severe-weather":
-                image = "https://gdarwish.scweb.ca/NextEventImages/severe.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Severeweather.png";
                 break;
             case "disasters":
-                image = "https://gdarwish.scweb.ca/NextEventImages/disasters.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Disasters.png";
                 break;
             case "terror":
-                image = "https://gdarwish.scweb.ca/NextEventImages/terror.png";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Terror.png";
                 break;
             case "concerts":
-                image = "https://gdarwish.scweb.ca/NextEventImages/concerts.jpg";
+                image = "https://gdarwish.scweb.ca/NextEventImages/Concerts.png";
                 break;
             default:
                 image = "default image";

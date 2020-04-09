@@ -1,13 +1,15 @@
 package com.nextevent.Fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import ca.alidali.mainapi.APIResponse;
 
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +19,15 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
+import com.nextevent.API.APIResponse;
 import com.nextevent.API.EventSingleton;
 import com.nextevent.JavaBeans.CustomRecyclerviewAdapter;
 import com.nextevent.JavaBeans.Event;
 import com.nextevent.JavaBeans.EventResult;
 import com.nextevent.R;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +37,8 @@ import static com.nextevent.MainActivity.fab;
 
 /**
  * @author Ghaith Darwish
- * @Last Modified: 30/03/2020
+ * @author Abel Anderson
+ * @since 08/04/2020
  */
 public class EventsFragment extends Fragment implements APIResponse {
 
@@ -53,13 +60,23 @@ public class EventsFragment extends Fragment implements APIResponse {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_events, container, false);
 
+        // Create SharedPreferences for storing and changing the layout
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int layout = sharedPreferences.getInt("LAYOUT", R.layout.event_item_model);
+
         fab.hide();
         searBar = view.findViewById(R.id.searchBar);
         recyclerView = view.findViewById(R.id.eventRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // setting the LayoutManager according to which layout is displayed
+        if (layout == R.layout.recycler_grid_layout)
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        else
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         noEventsText = view.findViewById(R.id.noEventsText);
         // API KEY
-        //headers.put("Authorization", getString(R.string.api_key));
+        headers.put("Authorization", getString(R.string.api_key));
 
         // creating new instance of CustomRecyclerviewAdapter
         adapter = new CustomRecyclerviewAdapter(events, getActivity(), R.id.eventToDetail, false);
@@ -70,7 +87,25 @@ public class EventsFragment extends Fragment implements APIResponse {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (textView.getText().toString().isEmpty()) return false;
-                search(url + textView.getText().toString());
+                String urlParams = textView.getText().toString().trim();
+
+                //Grab the Shared Preferences
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+                //Check if they are searching for future events
+                if(sharedPreferences.getBoolean(SettingFragment.FUTURE_EVENTS, false)) {
+                    String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    urlParams += "&active.gte=" + currentDate;
+                }
+
+                //Check if they are searching for local events
+                if(sharedPreferences.getBoolean(SettingFragment.LOCAL_EVENTS, false)) {
+                    urlParams += "&country=CA";
+                }
+
+                //Search the API
+                search(url + urlParams);
+
                 noEventsText.setVisibility(view.GONE);
                 return true;
             }
@@ -84,7 +119,6 @@ public class EventsFragment extends Fragment implements APIResponse {
      * @param search
      */
     private void search(String search) {
-        search += "&country=CA";
         EventSingleton.getInstance(getContext())
                 .setHeaders(headers)
                 .jsonObjectRequest(Request.Method.GET, search, null, this);

@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#4457cb</color>
     <color name="colorAccent">#D81B60</color>
     <color name="hitText">#6D000000</color>
+    <color name="caledar_color">#B5030303</color>
+    <color name="gray_background">#808080</color>
 </resources>

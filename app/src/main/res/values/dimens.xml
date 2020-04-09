@@ -6,5 +6,13 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <!-- Padding & Margin Values -->
     <dimen name="eventCircle_padding">1dp</dimen>
+
+
+    <!-- Font Values -->
+    <dimen name="large_title">24sp</dimen>
+    <dimen name="regular_text">16sp</dimen>
+    <dimen name="title">18sp</dimen>
+
 </resources>

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nextevent.Calendar.CalendarEventRecyclerViewAdapter;
 import com.nextevent.Calendar.CalendarRecyclerViewAdapter;
 import com.nextevent.DatabaseHandler;
 import com.nextevent.JavaBeans.CalendarMonth;
@@ -26,8 +27,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import static com.nextevent.MainActivity.fab;
+
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * @author Abel Anderson
+ * @since 07/04/2020
+ * @version 1.3
  */
 public class CalendarFragment extends Fragment {
 
@@ -41,9 +48,11 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
+        fab.hide();
+
         //Get all events from the Database
         DatabaseHandler db = new DatabaseHandler(getContext());
-        ArrayList<Event> events = db.getAllEvents();
+        ArrayList<Event> events = db.getAddedEvents();
 
         //Create new ArrayList for Adapter
         ArrayList<CalendarMonth> calendarMonths = new ArrayList<>();
@@ -57,10 +66,17 @@ public class CalendarFragment extends Fragment {
             calendarMonths.add(new CalendarMonth(currentMonth.plusMonths(i), currentEvents));
         }
 
-        //Set up the RecyclerView
+        //Set up the Calendar Events RecyclerView
+        CalendarEventRecyclerViewAdapter eventRecyclerViewAdapter = new CalendarEventRecyclerViewAdapter(new ArrayList<Event>());
+
+        RecyclerView calendarEventRecyclerView = view.findViewById(R.id.calendarEventsRecyclerView);
+        calendarEventRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        calendarEventRecyclerView.setAdapter(eventRecyclerViewAdapter);
+
+        //Set up the Calendar RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.calendarRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths));
+        recyclerView.setAdapter(new CalendarRecyclerViewAdapter(calendarMonths, eventRecyclerViewAdapter));
 
         //Make sure to scroll to the current month
         recyclerView.scrollToPosition(12);
