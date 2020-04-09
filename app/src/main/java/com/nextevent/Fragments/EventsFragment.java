@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +76,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 
         noEventsText = view.findViewById(R.id.noEventsText);
         // API KEY
-        headers.put("Authorization", "Bearer l5V8mMsVhA99CwkPxc7T2E9IU_SCxzJPxQDdqQua");
+        headers.put("Authorization", getString(R.string.api_key));
 
         // creating new instance of CustomRecyclerviewAdapter
         adapter = new CustomRecyclerviewAdapter(events, getActivity(), R.id.eventToDetail, false);
@@ -92,17 +91,19 @@ public class EventsFragment extends Fragment implements APIResponse {
 
                 //Grab the Shared Preferences
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+                //Check if they are searching for future events
                 if(sharedPreferences.getBoolean(SettingFragment.FUTURE_EVENTS, false)) {
                     String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     urlParams += "&active.gte=" + currentDate;
                 }
 
+                //Check if they are searching for local events
                 if(sharedPreferences.getBoolean(SettingFragment.LOCAL_EVENTS, false)) {
                     urlParams += "&country=CA";
                 }
 
-                Log.d("URL", url + urlParams);
-
+                //Search the API
                 search(url + urlParams);
 
                 noEventsText.setVisibility(view.GONE);
