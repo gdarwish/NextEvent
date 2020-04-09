@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_detail_view_pager" />
     <fragment
         android:id="@+id/creditsFragment"
-        android:name="com.nextevent.CreditsFragment"
+        android:name="com.nextevent.Fragments.CreditsFragment"
         android:label="Credits"
         tools:layout="@layout/fragment_credits" />
 </navigation>

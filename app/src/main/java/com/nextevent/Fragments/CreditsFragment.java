@@ -1,4 +1,4 @@
-package com.nextevent;
+package com.nextevent.Fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nextevent.R;
+
+import static com.nextevent.MainActivity.fab;
 
 
 /**
@@ -23,6 +27,9 @@ public class CreditsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_credits, container, false);
+        View view = inflater.inflate(R.layout.fragment_credits, container, false);
+        fab.hide();
+
+        return view;
     }
 }

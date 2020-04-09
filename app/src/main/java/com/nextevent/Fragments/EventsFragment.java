@@ -76,7 +76,7 @@ public class EventsFragment extends Fragment implements APIResponse {
 
         noEventsText = view.findViewById(R.id.noEventsText);
         // API KEY
-        //headers.put("Authorization", getString(R.string.api_key));
+        headers.put("Authorization", getString(R.string.api_key));
 
         // creating new instance of CustomRecyclerviewAdapter
         adapter = new CustomRecyclerviewAdapter(events, getActivity(), R.id.eventToDetail, false);

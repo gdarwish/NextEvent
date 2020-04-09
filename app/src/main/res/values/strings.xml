@@ -37,4 +37,6 @@
     <string name="credits_librariesGson">Gson</string>
     <string name="credits_librariesFlexBox">FlexBox</string>
     <string name="credits_librariesStickySwitch">StickySwitch</string>
+    <string name="images_text">Images &amp; Icons</string>
+    <string name="images">flaticon.com</string>
 </resources>
