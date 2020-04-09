@@ -16,5 +16,11 @@
     <string name="searchHint">Search for event...</string>
     <string name="HintText">Search for events...</string>
     <string name="SavedHint">There isn\'t any saved events...</string>
+
+    <!-- Settings Strings -->
     <string name="layout">Layout Style:</string>
+    <string name="futureEvent_setting">Only show future events:</string>
+    <string name="localEvent_setting">Only show local events:</string>
+    <string name="localEventCode_setting">Enter your two character country code:</string>
+    <string name="localEventCodeHint_setting">CA, US, FR…</string>
 </resources>

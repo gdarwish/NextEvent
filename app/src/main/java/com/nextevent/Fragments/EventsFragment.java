@@ -26,6 +26,9 @@ import com.nextevent.JavaBeans.Event;
 import com.nextevent.JavaBeans.EventResult;
 import com.nextevent.R;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,8 +37,8 @@ import static com.nextevent.MainActivity.fab;
 
 /**
  * @author Ghaith Darwish
- * @Last Modified: 08/04/2020
- * @since 30/03/2020
+ * @author Abel Anderson
+ * @since 08/04/2020
  */
 public class EventsFragment extends Fragment implements APIResponse {
 
@@ -84,7 +87,25 @@ public class EventsFragment extends Fragment implements APIResponse {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (textView.getText().toString().isEmpty()) return false;
-                search(url + textView.getText().toString());
+                String urlParams = textView.getText().toString().trim();
+
+                //Grab the Shared Preferences
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+                //Check if they are searching for future events
+                if(sharedPreferences.getBoolean(SettingFragment.FUTURE_EVENTS, false)) {
+                    String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    urlParams += "&active.gte=" + currentDate;
+                }
+
+                //Check if they are searching for local events
+                if(sharedPreferences.getBoolean(SettingFragment.LOCAL_EVENTS, false)) {
+                    urlParams += "&country=CA";
+                }
+
+                //Search the API
+                search(url + urlParams);
+
                 noEventsText.setVisibility(view.GONE);
                 return true;
             }
@@ -98,7 +119,6 @@ public class EventsFragment extends Fragment implements APIResponse {
      * @param search
      */
     private void search(String search) {
-        search += "&country=CA";
         EventSingleton.getInstance(getContext())
                 .setHeaders(headers)
                 .jsonObjectRequest(Request.Method.GET, search, null, this);
