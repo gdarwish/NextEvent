@@ -10,6 +10,7 @@
     <string name="menu_calendar">Calendar</string>
     <string name="menu_saved">Saved Events</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_credits">Credits</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -23,4 +24,17 @@
     <string name="localEvent_setting">Only show local events:</string>
     <string name="localEventCode_setting">Enter your two character country code:</string>
     <string name="localEventCodeHint_setting">CA, US, FR…</string>
+
+    <!-- Credits Strings -->
+    <string name="credits_authorTitle">Authors</string>
+    <string name="credits_authorAbel">Abel Anderson</string>
+    <string name="credits_authorGhaith">Ghaith Darwish</string>
+    <string name="credits_librariesTitle">Libraries</string>
+    <string name="credits_librariesCalendar">CalendarView</string>
+    <string name="credits_librariesThreeTenAbp">ThreeTenABP</string>
+    <string name="credits_librariesPicasso">Picasso</string>
+    <string name="credits_librariesVolley">Volley</string>
+    <string name="credits_librariesGson">Gson</string>
+    <string name="credits_librariesFlexBox">FlexBox</string>
+    <string name="credits_librariesStickySwitch">StickySwitch</string>
 </resources>

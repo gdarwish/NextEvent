@@ -25,6 +25,10 @@
                 android:checkable="true"
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="@string/menu_settings" />
+            <item
+                android:id="@+id/creditsFragment"
+                android:icon="@drawable/ic_receipt_black_24dp"
+                android:title="@string/menu_credits" />
         </menu>
     </item>
 

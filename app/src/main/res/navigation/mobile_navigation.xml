@@ -50,4 +50,9 @@
         android:name="com.nextevent.Fragments.DetailViewPagerFragment"
         android:label="Saved Events"
         tools:layout="@layout/fragment_detail_view_pager" />
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="com.nextevent.CreditsFragment"
+        android:label="Credits"
+        tools:layout="@layout/fragment_credits" />
 </navigation>
