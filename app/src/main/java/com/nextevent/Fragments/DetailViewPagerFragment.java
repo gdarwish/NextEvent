@@ -55,6 +55,7 @@ public class DetailViewPagerFragment extends Fragment {
         adapter = new ViewPagerDetailAdapter(getChildFragmentManager(), events);
         adapter.getItem(adapter.getItemPosition(event));
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(adapter.getItemPosition(event));
         return view;
     }
 }
