@@ -18,7 +18,7 @@ Browse an api-driven list of events and save them to your list for a more concis
 
 The Database that is created when you first open the app. This will store any events you save or add to the calendar. 
 
-<img src="Images/Database.png" alt="NextEvent Database" style="zoom:40%;" />
+<img src="Images/Database.png" alt="NextEvent Database" style="zoom:40%;" width="40%" />
 
 ## Getting Started
 
