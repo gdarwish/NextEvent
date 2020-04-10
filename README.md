@@ -18,7 +18,7 @@ Browse an api-driven list of events and save them to your list for a more concis
 
 The Database that is created when you first open the app. This will store any events you save or add to the calendar. 
 
-<img src="Images/Database.png" alt="NextEvent Database" width="40%" align="center" />
+<img src="Images/Database.png" alt="NextEvent Database" width="40%"/>
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ The Database that is created when you first open the app. This will store any ev
 
 When you start up the app, you are taken to the Events screen.
 
-<img src="Images/ApiSearch.png" alt="Api Search" width="25%" align="center" />
+<img src="Images/ApiSearch.png" alt="Api Search" width="25%"/>
 
 
 
@@ -42,25 +42,25 @@ Tapping on the save icon saves the event to your saved events, so you can view i
 
 Finally, selecting the Add Event button will add the event to the in-app calendar, so you can plan out your event schedule.
 
-<img src="Images/EventDetails.png" alt="Event Details" width="25%" align="center" />
+<img src="Images/EventDetails.png" alt="Event Details" width="25%"/>
 
 ### Calendar
 
 The Calendar screen affords you a view of the events you have added to it. The day with the outlined blue square around it is the current day, and the day with the blue circle is the day you currently have selected. Just below the calendar you can see all the events you have on the day you have selected. If you wish to remove an event from that day, just tap on the trash icon.
 
-<img src="Images/CalendarView.png" alt="Calendar" width="25%" align="center" />
+<img src="Images/CalendarView.png" alt="Calendar" width="25%"/>
 
 ### Saved Events
 
 Saved Events provides you a view of all the events you have saved. If you wish to delete an event from this list, just tap the trash icon beside the event details.
 
-<img src="Images/SavedEventsGrid.png" alt="Saved Events" width="25%" align="center" />
+<img src="Images/SavedEventsGrid.png" alt="Saved Events" width="25%"/>
 
 ### Settings
 
 The Settings screen allows you to modify the way the app looks and functions. The layout style applies to the Events Screen and the Saved Events screen. The only show future/local events options will apply when searching the api, filtering your results so you have a more exact result set.
 
-<img src="Images/Settings.png" alt="Settings" width="25%" align="center" />
+<img src="Images/Settings.png" alt="Settings" width="25%"/>
 
 ## Prerequisites
 
