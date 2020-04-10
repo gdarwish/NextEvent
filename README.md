@@ -4,7 +4,6 @@
 
 ## Overview
 
----
 
 Event tracker for community and social events.
 
@@ -14,15 +13,12 @@ Browse an api-driven list of events and save them to your list for a more concis
 
 ## Database
 
----
 
 The Database that is created when you first open the app. This will store any events you save or add to the calendar. 
 
 <img src="Images/Database.png" alt="NextEvent Database" width="40%"/>
 
 ## Getting Started
-
----
 
 ### Events
 
@@ -64,13 +60,9 @@ The Settings screen allows you to modify the way the app looks and functions. Th
 
 ## Prerequisites
 
----
-
 Users of this app must have a phone or tablet supporting Android 4.4 (KitKat) or greater.
 
 ## Libraries
-
----
 
 The list of libraries used in this project.
 
@@ -84,14 +76,10 @@ The list of libraries used in this project.
 
 ## Authors
 
----
-
 - Ghaith Darwish - [Github](https://github.com/gdarwish)
 - Abel Anderson - [Github](https://github.com/AbelSAnderson) - [Linkedin](https://www.linkedin.com/in/abel-anderson)
 
 ## Acknowledgements
-
----
 
 This app was built as a 2nd year project for the Mobile Application Development program at St. Clair College. Many thanks to our teacher, Cai Filiaut, for supporting us in this project & for his amazing suggestions - Team Gable
 
